@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class CloneController : MonoBehaviour
@@ -7,13 +8,12 @@ public class CloneController : MonoBehaviour
 
     [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
+
+    CloneHealth cloneHealth;
+
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Rigidbody cloneRigidbody;          // Reference to the player's rigidbody.
     ConstantForce customgravity;        // Gravity bassed on a Vector UP
-
-    [SerializeField]
-    CloningController cloningController; //add a list of cloning plates?
-
 
     [SerializeField]
     Vector3 moveforvard;
@@ -33,8 +33,10 @@ public class CloneController : MonoBehaviour
 
     void Start()
     {
+        
+        cloneHealth = GetComponent<CloneHealth>();
         player = GameObject.Find("Player"); //Fix this somehow
-        cloningController = GameObject.Find("Cloning Plate").GetComponent<CloningController>();
+        
         cloneRigidbody = GetComponent<Rigidbody>();
         customgravity = GetComponent<ConstantForce>();
         playerController = player.GetComponent<PlayerController>();
@@ -85,6 +87,11 @@ public class CloneController : MonoBehaviour
         {
             holdposition = false;
         }
+
+        if (holdposition)
+        {
+            cloneHealth.DecreaseHP();
+        }
     }
 
     void CopyMove(float h, float v)
@@ -116,9 +123,9 @@ public class CloneController : MonoBehaviour
     {
         if (other.tag == "Death")
         {
-            cloningController.platformactivated = false;
-            Destroy(this.gameObject);
+           cloneHealth.CloneDeath();
         }
     }
+
 }
 

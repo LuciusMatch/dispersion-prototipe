@@ -12,7 +12,7 @@ public class Interactable : MonoBehaviour
         if (!PlayerIn)
             return;
 
-        if (Input.GetMouseButtonDown(1) == true)
+        if (Input.GetMouseButtonDown(0) == true)
             Interact();
     }
 
