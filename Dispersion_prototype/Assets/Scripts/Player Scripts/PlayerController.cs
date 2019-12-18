@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         customgravity = GetComponent<ConstantForce>();
-
         GetMovmentDir();
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
     }
@@ -62,6 +61,7 @@ public class PlayerController : MonoBehaviour
         // Move the player to it's current position plus the movement.
         playerRigidbody.MovePosition(transform.position + movement);
     }
+
 
     void GetMovmentDir()
     {
