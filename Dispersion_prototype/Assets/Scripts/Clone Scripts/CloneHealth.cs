@@ -14,13 +14,12 @@ public class CloneHealth : MonoBehaviour
 
     [SerializeField]
     float healthdecreaseSpeed;
-    CloningController cloningController;
+    public CloningController cloningController;
     // Start is called before the first frame update
     void Start()
     {
         
         healthdecreaseSpeed = 20;
-        cloningController = GameObject.Find("Cloning Plate").GetComponent<CloningController>();
         healthbar = transform.Find("HealthBar").gameObject;
         helthbarlenght = healthbar.transform.localScale;
     }

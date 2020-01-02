@@ -23,10 +23,13 @@ public class CloningController : MonoBehaviour
     {
         if (other.tag == "Player" && platformactivated == false)
         {
+            other.transform.parent = transform.parent;
+
             Vector3 cloneposition = CalculatePosition(other.transform);
             //Debug.DrawLine(cloneOriginTransform.position, cloneposition, Color.black, 15);
 
             GameObject newclone = Instantiate(clonegameobject, cloneposition, cloneOriginTransform.rotation, cloneOriginTransform.parent);
+            newclone.GetComponent<CloneHealth>().cloningController = this.GetComponent<CloningController>();
             //Chane cloneOriginTransform.rotation to some rotation similar to rotation of a player relative to cloning platform of maybe use local-world-local in clone turning script
 
 

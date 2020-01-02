@@ -82,7 +82,8 @@ public class PlayerController : MonoBehaviour
     {
         if (other.tag == "Death")
         {
-            Debug.Log("Game Over, pal!");
+            Debug.Log("Game Over, pal! By " + other.name);
+
             Application.LoadLevel(Application.loadedLevel);
             //GameOver();
         }
