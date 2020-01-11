@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
+
 public class TempCameraController : MonoBehaviour
 {
 
     [SerializeField]
     Transform CameraPoint;
+    [SerializeField]
+    int camerasize;
     Camera cam;
 
     public float speed = 5.0F;
@@ -28,8 +30,8 @@ public class TempCameraController : MonoBehaviour
         {
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
-            cam.transform.position = Vector3.Lerp(starttransform, CameraPoint.position, fracJourney);
-
+            cam.transform.position = Vector3.Lerp(starttransform, CameraPoint.position, fracJourney*4);
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, camerasize, fracJourney/5);
             if (cam.transform.position == CameraPoint.position) movecam = false;
         }
     }

@@ -20,7 +20,14 @@ public class CloneTurning : MonoBehaviour
 
     void CopyTurning()
     {
+
         Quaternion newRotation = player.transform.localRotation;
+
+        if (transform.parent.GetComponent<CloneController>().reversemovement == true)
+        {
+            newRotation.w *= -1;
+            newRotation.x *= -1;
+        }
 
         transform.localRotation = newRotation;
     }

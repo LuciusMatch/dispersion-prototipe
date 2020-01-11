@@ -500,7 +500,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!75 &708365596209402263
 ConstantForce:
@@ -547,3 +547,4 @@ MonoBehaviour:
   helthbarlenght: {x: 0, y: 0, z: 0}
   curHealth: 100
   healthdecreaseSpeed: 20
+  cloningController: {fileID: 0}
