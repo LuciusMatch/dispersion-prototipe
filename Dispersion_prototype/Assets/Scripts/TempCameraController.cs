@@ -9,19 +9,24 @@ public class TempCameraController : MonoBehaviour
     Transform CameraPoint;
     [SerializeField]
     int camerasize;
+    [SerializeField]
+    bool isortographic;
     Camera cam;
 
     public float speed = 5.0F;
     private float startTime;
     private float journeyLength;
     Vector3 starttransform;
+    Quaternion startrotation;
 
     private bool movecam;
 
-    
+    PlayerController playerController;
+
     void Start()
     {
         movecam = false;
+        playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -30,9 +35,18 @@ public class TempCameraController : MonoBehaviour
         {
             float distCovered = (Time.time - startTime) * speed;
             float fracJourney = distCovered / journeyLength;
+
             cam.transform.position = Vector3.Lerp(starttransform, CameraPoint.position, fracJourney*4);
-            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, camerasize, fracJourney/5);
-            if (cam.transform.position == CameraPoint.position) movecam = false;
+            cam.transform.rotation = Quaternion.Lerp(startrotation, CameraPoint.rotation, fracJourney*4);
+
+            if (isortographic)
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camerasize, fracJourney/5);
+
+            if ((cam.transform.position == CameraPoint.position) && (cam.transform.rotation == CameraPoint.rotation))
+            {
+                playerController.GetMovmentDir();
+                movecam = false;
+            }
         }
     }
 
@@ -43,8 +57,14 @@ public class TempCameraController : MonoBehaviour
             cam = Camera.main;
 
             startTime = Time.time;
+            startrotation = cam.transform.rotation;
             starttransform = cam.transform.position;
             journeyLength = Vector3.Distance(starttransform, CameraPoint.position);
+
+            if (isortographic)
+                cam.orthographic = true;
+            else
+                cam.orthographic = false;
 
             movecam = true;
         }

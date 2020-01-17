@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void GetMovmentDir()
+    public void GetMovmentDir()
     {
         moveforvard = Camera.main.transform.forward;
         moveforvard.y = 0;
