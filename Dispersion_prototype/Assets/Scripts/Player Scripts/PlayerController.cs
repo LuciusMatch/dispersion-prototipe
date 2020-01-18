@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Game Over, pal! By " + other.name);
 
-            Application.LoadLevel(Application.loadedLevel);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
             //GameOver();
         }
     }

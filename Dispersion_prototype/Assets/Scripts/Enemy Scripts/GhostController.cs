@@ -11,6 +11,7 @@ public class GhostController : MonoBehaviour
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        goal = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
