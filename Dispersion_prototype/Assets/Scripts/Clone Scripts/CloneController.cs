@@ -73,11 +73,16 @@ public class CloneController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && holdposition == false)
-        {
+        if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        if ((playerController.hasGun) && Input.GetMouseButtonUp(0))
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 
-            cloneRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space) && holdposition == false)
+        //{
+
+        //    cloneRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        //}
 
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -121,7 +126,7 @@ public class CloneController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Death")
+        if (other.tag == "Death" || other.tag == "Ghost")
         {
            cloneHealth.CloneDeath();
         }

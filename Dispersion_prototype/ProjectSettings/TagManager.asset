@@ -8,6 +8,10 @@ TagManager:
   - Clone
   - Death
   - Camera Switch
+  - CheckPoint
+  - GunArea
+  - Gun
+  - Ghost
   layers:
   - Default
   - TransparentFX

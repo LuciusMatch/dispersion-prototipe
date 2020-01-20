@@ -15,7 +15,10 @@ public class CloneHealth : MonoBehaviour
     [SerializeField]
     float healthdecreaseSpeed;
     public CloningController cloningController;
-    // Start is called before the first frame update
+
+    bool hasGun = false;
+
+
     void Start()
     {
         

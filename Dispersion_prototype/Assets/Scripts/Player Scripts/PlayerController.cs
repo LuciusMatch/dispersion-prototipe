@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
+    CheckPointManager checkPointManager;
+
+    [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
@@ -20,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 forvardRelative;
     public Vector3 rightRelative;
+
+    public bool hasGun = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -43,11 +48,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
 
-            playerRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        }
+        //    playerRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        //}
+
+        if ((hasGun) && Input.GetMouseButtonDown(0))
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+
+        if ((hasGun) && Input.GetMouseButtonUp(0))
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
+
     }
 
     void Move(float h, float v)
@@ -81,12 +94,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Death")
+        if (other.tag == "Gun")
         {
-            Debug.Log("Game Over, pal! By " + other.name);
+            hasGun = true;
+            Destroy(other.gameObject);
+        }
 
+        if (other.tag == "Death" || other.tag == "Ghost")
+        {
+            if (checkPointManager.lastactivated == 0)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-            //GameOver();
         }
     }
 }
