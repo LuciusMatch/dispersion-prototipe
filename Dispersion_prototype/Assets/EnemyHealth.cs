@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
     float regenerationSpeed = 30;
 
     [SerializeField]
-    float damagingSpeed = 50;
+    float damagingSpeed = 60;
 
     // Start is called before the first frame update
     void Start()

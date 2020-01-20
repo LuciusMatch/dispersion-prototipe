@@ -29,7 +29,7 @@ public class CloneController : MonoBehaviour
     public bool mirrormovementX = false;
     public bool mirrormovementZ = false;
 
-
+    public Animator animator;
 
     void Start()
     {
@@ -43,6 +43,8 @@ public class CloneController : MonoBehaviour
 
         GetMovmentDir();
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
+
+        animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -51,6 +53,13 @@ public class CloneController : MonoBehaviour
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+
+        if (playerController.hasGun) animator.SetBool("HasGun", true);
+        else animator.SetBool("HasGun", false);
+
+        if (h != 0 || v != 0)
+            animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
 
         if (mirrormovementX == true)
         {
@@ -74,9 +83,9 @@ public class CloneController : MonoBehaviour
     private void Update()
     {
         if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
         if ((playerController.hasGun) && Input.GetMouseButtonUp(0))
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);
 
         //if (Input.GetKeyDown(KeyCode.Space) && holdposition == false)
         //{

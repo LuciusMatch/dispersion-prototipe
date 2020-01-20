@@ -12,8 +12,12 @@ public class GhostController : MonoBehaviour
     [SerializeField]
     Transform currentgoal;
 
+    public Animator animator;
+
     void Start()
     {
+        animator = transform.Find("Model").GetComponent<Animator>();
+
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -24,6 +28,9 @@ public class GhostController : MonoBehaviour
     void Update()
     {
         GameObject currentclone = FindClosestClone();
+
+        if (agent.velocity.magnitude != 0) animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
 
         if (currentclone == null)
             currentgoal = player;

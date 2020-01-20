@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public bool hasGun = false;
 
+    public Animator animator;
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,6 +34,8 @@ public class PlayerController : MonoBehaviour
         customgravity = GetComponent<ConstantForce>();
         GetMovmentDir();
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
+
+        animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,6 +45,12 @@ public class PlayerController : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
+        if (hasGun) animator.SetBool("HasGun", true);
+        else animator.SetBool("HasGun", false);
+
+        if (h != 0 || v != 0)
+            animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
         // Move the player around the scene.
         Move(h, v);
     }
@@ -55,10 +64,10 @@ public class PlayerController : MonoBehaviour
         //}
 
         if ((hasGun) && Input.GetMouseButtonDown(0))
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
 
         if ((hasGun) && Input.GetMouseButtonUp(0))
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);
 
 
     }
@@ -102,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Death" || other.tag == "Ghost")
         {
-            if (checkPointManager.lastactivated == 0)
+            //if (checkPointManager.lastactivated == 0)
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
         }
     }
