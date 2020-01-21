@@ -12,6 +12,7 @@ TagManager:
   - GunArea
   - Gun
   - Ghost
+  - SpaceTrigger
   layers:
   - Default
   - TransparentFX

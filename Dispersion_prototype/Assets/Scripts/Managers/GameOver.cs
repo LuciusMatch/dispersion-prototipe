@@ -16,9 +16,7 @@ public class GameOver : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Thanks for playing" + other.name);
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

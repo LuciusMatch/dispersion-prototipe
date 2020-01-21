@@ -411,7 +411,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh136932
+  m_Name: pb_Mesh29902
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -702,7 +702,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: cf3b9d1bf6f41d445b14bffec6e03757, type: 3}
-    m_FontSize: 16
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -725,7 +725,7 @@ MonoBehaviour:
 
 
     You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the beginning.
+    game will start from the checkpoint.
 
 
     You or your clone can die by contacting electrified platforms of enemies, that
@@ -739,7 +739,10 @@ MonoBehaviour:
 
     You will encounter multiple closed doors. To open the door you need to press "E"
     near the button of the same color. You can press it by yourself or using your
-    clone.'
+    clone.
+
+
+    To pause the game press ESC'
 --- !u!222 &272023389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -782,8 +785,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 226, y: 138}
-  m_SizeDelta: {x: 412.29, y: 244.98}
+  m_AnchoredPosition: {x: 236.7, y: 138}
+  m_SizeDelta: {x: 445, y: 244.98}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &381049463
 MonoBehaviour:
@@ -821,12 +824,12 @@ MonoBehaviour:
 
     Music:
 
-    In game: "Blue Sizzle" by Kevin MacLeod
+    "Blue Sizzle" by Kevin MacLeod
 
     License: CC BY http://creativecommons.org/licenses/by/4.0/
 
 
-    In menu: "Few survivors" by Blear Moon
+    "Few survivors" and "11600 years ago" by Blear Moon
 
     License: CC BY-NC-ND
 
@@ -1163,7 +1166,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh136920
+  m_Name: pb_Mesh29890
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2243,7 +2246,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh136908
+  m_Name: pb_Mesh29878
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16981,7 +16984,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: cf3b9d1bf6f41d445b14bffec6e03757, type: 3}
-    m_FontSize: 16
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -17004,7 +17007,7 @@ MonoBehaviour:
 
 
     You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the beginning.
+    game will start from the checkpoint.
 
 
     You or your clone can die by contacting electrified platforms of enemies, that
@@ -17018,7 +17021,10 @@ MonoBehaviour:
 
     You will encounter multiple closed doors. To open the door you need to press "E"
     near the button of the same color. You can press it by yourself or using your
-    clone.'
+    clone.
+
+
+    To pause the game press ESC'
 --- !u!222 &2050607780
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17084,7 +17090,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: cf3b9d1bf6f41d445b14bffec6e03757, type: 3}
-    m_FontSize: 16
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -17107,7 +17113,7 @@ MonoBehaviour:
 
 
     You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the beginning.
+    game will start from the checkpoint.
 
 
     You or your clone can die by contacting electrified platforms of enemies, that
@@ -17121,7 +17127,10 @@ MonoBehaviour:
 
     You will encounter multiple closed doors. To open the door you need to press "E"
     near the button of the same color. You can press it by yourself or using your
-    clone.'
+    clone.
+
+
+    To pause the game press ESC'
 --- !u!222 &2071273075
 CanvasRenderer:
   m_ObjectHideFlags: 0

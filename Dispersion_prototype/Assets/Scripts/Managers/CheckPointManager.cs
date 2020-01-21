@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    [SerializeField]
-    Transform[] checkpoints;
-    public int lastactivated;
-    void Start()
-    {
-        
-    }
+    private static CheckPointManager instance;
 
-    // Update is called once per frame
-    void Update()
+    public int lastCheckPoint;
+    void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

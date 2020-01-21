@@ -38,6 +38,13 @@ public class PlayerController : MonoBehaviour
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        checkPointManager = GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>();
+        string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
+        transform.position = GameObject.Find(lastcheckpointname).transform.position;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -112,7 +119,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Death" || other.tag == "Ghost")
         {
             //if (checkPointManager.lastactivated == 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

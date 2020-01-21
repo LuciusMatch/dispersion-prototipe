@@ -23,9 +23,11 @@ public class TempCameraController : MonoBehaviour
 
     PlayerController playerController;
 
+
     void Start()
     {
-        movecam = false;
+
+       movecam = false;
         playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
