@@ -23,6 +23,7 @@ public class CheckPoint : MonoBehaviour
         if (other.tag == "Player")
         {
             checkPointManager.lastCheckPoint = checkpointnumber;
+            checkPointManager.hadGun = other.GetComponent<PlayerController>().hasGun;
         }
     }
 }

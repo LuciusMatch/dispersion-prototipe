@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     CheckPointManager checkPointManager;
 
+    PlayerHealth playerHealth;
+
     [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
     Vector3 movement;                   // The vector to store the direction of the player's movement.
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         customgravity = GetComponent<ConstantForce>();
+        playerHealth = GetComponent<PlayerHealth>();
+
         GetMovmentDir();
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
 
@@ -43,6 +47,7 @@ public class PlayerController : MonoBehaviour
         checkPointManager = GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>();
         string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
         transform.position = GameObject.Find(lastcheckpointname).transform.position;
+        hasGun = checkPointManager.hadGun;
     }
 
     // Update is called once per frame
@@ -116,10 +121,18 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if (other.tag == "Death" || other.tag == "Ghost")
+        if (other.tag == "Death")
         {
-            //if (checkPointManager.lastactivated == 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            playerHealth.Death();
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Ghost")
+        {
+            playerHealth.DecreaseHP();
+        }
+        //curHealth -= Time.deltaTime * damagingSpeed;
     }
 }

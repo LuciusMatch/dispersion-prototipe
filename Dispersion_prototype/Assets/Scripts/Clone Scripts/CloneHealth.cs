@@ -27,12 +27,6 @@ public class CloneHealth : MonoBehaviour
         helthbarlenght = healthbar.transform.localScale;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
    void UpdateHP()
     {
         Vector3 healthbarlengthnew = new Vector3(helthbarlenght.x, helthbarlenght.y, helthbarlenght.z * curHealth / maxHealth);

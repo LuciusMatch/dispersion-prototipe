@@ -7,6 +7,8 @@ public class CheckPointManager : MonoBehaviour
     private static CheckPointManager instance;
 
     public int lastCheckPoint;
+
+    public bool hadGun;
     void Awake()
     {
         if (instance == null)

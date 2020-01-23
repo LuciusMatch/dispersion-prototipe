@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CloneController : MonoBehaviour
 {
+    Image cloneIndicator;
 
     [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
@@ -33,8 +34,9 @@ public class CloneController : MonoBehaviour
 
     void Start()
     {
-        
         cloneHealth = GetComponent<CloneHealth>();
+
+ 
         player = GameObject.Find("Player"); //Fix this somehow
         
         cloneRigidbody = GetComponent<Rigidbody>();
@@ -45,6 +47,9 @@ public class CloneController : MonoBehaviour
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
+        cloneIndicator = GameObject.Find("CloneIndicator").GetComponent<Image>();
+        
+
     }
 
     // Update is called once per frame
@@ -82,6 +87,8 @@ public class CloneController : MonoBehaviour
     }
     private void Update()
     {
+        cloneIndicator.enabled = true; //Really bad!
+
         if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
             transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
         if ((playerController.hasGun) && Input.GetMouseButtonUp(0))
@@ -135,10 +142,22 @@ public class CloneController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Death" || other.tag == "Ghost")
+        if (other.tag == "Death")
         {
-           cloneHealth.CloneDeath();
+            cloneIndicator.enabled = false;
+            cloneHealth.CloneDeath();
         }
+
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Ghost")
+        {
+            cloneHealth.DecreaseHP();
+        }
+        //curHealth -= Time.deltaTime * damagingSpeed;
     }
 
 }
