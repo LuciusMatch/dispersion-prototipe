@@ -96,8 +96,9 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -716,34 +717,38 @@ MonoBehaviour:
   m_Text: 'Your goal in this game is to pass through 5 rooms.
 
 
-    In many rooms you will be able to control synchroniously moving clones, that you
-    can create by stepping on blue platforms. If you have activated clones a blue
-    indicator will appear near your healthbar.
+    In many rooms
+    you will be able to control synchroniously moving clones, that you can create
+    by stepping on blue platforms. If you have activated clones a blue indicator
+    will appear near your healthbar.
 
 
-    You can freeze the movement of a clone by holding Right Mouse Button. But It will
-    decrease the health of a clone.
+    You can freeze the movement of a clone
+    by holding Right Mouse Button. But It will decrease the health of a clone.
 
 
-    You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the checkpoint.
+    You
+    can create a new clone if the previous one disappears. But if you die, the game
+    will start from the checkpoint.
 
 
-    You or your clone can die by contacting electrified platforms or by enemies, that
-    will try to chase you.
+    You or your clone can die by contacting
+    electrified platforms or by enemies, that will try to chase you.
 
 
-    At some point you will get a Gun that you can use to kill enemies. To do it, you
-    will need to hold Left Mouse Button. A blue cone will appear, that will damage
-    enemies. But enemies will regenerate outside of a cone.
+    At some
+    point you will get a Gun that you can use to kill enemies. To do it, you will
+    need to hold Left Mouse Button. A blue cone will appear, that will damage enemies.
+    But enemies will regenerate outside of a cone.
 
 
-    You will encounter multiple closed doors. To open the door you need to press "E"
-    near the button of the same color. You can press it by yourself or using your
-    clone.
+    You will encounter multiple
+    closed doors. To open the door you need to press "E" near the button of the same
+    color. You can press it by yourself or using your clone.
 
 
-    To pause the game press ESC'
+    To pause the game
+    press ESC'
 --- !u!222 &272023389
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -825,12 +830,14 @@ MonoBehaviour:
 
     Music:
 
-    "Blue Sizzle" by Kevin MacLeod
+    "Blue
+    Sizzle" by Kevin MacLeod
 
     License: CC BY http://creativecommons.org/licenses/by/4.0/
 
 
-    "Few survivors" and "11600 years ago" by Blear Moon
+    "Few
+    survivors" and "11600 years ago" by Blear Moon
 
     License: CC BY-NC-ND
 
@@ -1022,8 +1029,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516924691}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -2488,9 +2496,9 @@ GameObject:
   - component: {fileID: 1533297727}
   - component: {fileID: 1533297726}
   - component: {fileID: 1533297725}
+  - component: {fileID: 1533297730}
   - component: {fileID: 1533297729}
   - component: {fileID: 1533297728}
-  - component: {fileID: 1533297730}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2572,14 +2580,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1533297724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: fa2d3945f97334d40864d4e83d8d1702, type: 2}
   isGlobal: 1
+  priority: 0
   blendDistance: 0
   weight: 1
-  priority: 0
+  sharedProfile: {fileID: 11400000, guid: 0dfb0c7ebd02f3a468fe8dc1001a2903, type: 2}
 --- !u!114 &1533297729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2589,57 +2597,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1533297724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeTrigger: {fileID: 1533297727}
-  volumeLayer:
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_CameraOutput: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  stopNaNPropagation: 1
-  finalBlitToCameraTarget: 1
-  antialiasingMode: 0
-  temporalAntialiasing:
-    jitterSpread: 0.75
-    sharpness: 0.25
-    stationaryBlending: 0.95
-    motionBlending: 0.85
-  subpixelMorphologicalAntialiasing:
-    quality: 2
-  fastApproximateAntialiasing:
-    fastMode: 0
-    keepAlpha: 0
-  fog:
-    enabled: 1
-    excludeSkybox: 1
-  debugLayer:
-    lightMeter:
-      width: 512
-      height: 256
-      showCurves: 1
-    histogram:
-      width: 512
-      height: 256
-      channel: 3
-    waveform:
-      exposure: 0.12
-      height: 256
-    vectorscope:
-      size: 256
-      exposure: 0.12
-    overlaySettings:
-      linearDepth: 0
-      motionColorIntensity: 4
-      motionGridSize: 64
-      colorBlindnessType: 0
-      colorBlindnessStrength: 1
-  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
-  m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
-  breakBeforeColorGrading: 0
-  m_BeforeTransparentBundles: []
-  m_BeforeStackBundles: []
-  m_AfterStackBundles: []
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!82 &1533297730
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6706,6 +6685,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -10249,6 +10229,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -16882,6 +16863,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -16999,34 +16981,38 @@ MonoBehaviour:
   m_Text: 'Your goal in this game is to pass through 5 rooms.
 
 
-    In many rooms you will be able to control synchroniously moving clones, that you
-    can create by stepping on blue platforms. If you have activated clones a blue
-    indicator will appear near your healthbar.
+    In many rooms
+    you will be able to control synchroniously moving clones, that you can create
+    by stepping on blue platforms. If you have activated clones a blue indicator
+    will appear near your healthbar.
 
 
-    You can freeze the movement of a clone by holding Right Mouse Button. But It will
-    decrease the health of a clone.
+    You can freeze the movement of a clone
+    by holding Right Mouse Button. But It will decrease the health of a clone.
 
 
-    You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the checkpoint.
+    You
+    can create a new clone if the previous one disappears. But if you die, the game
+    will start from the checkpoint.
 
 
-    You or your clone can die by contacting electrified platforms or by enemies, that
-    will try to chase you.
+    You or your clone can die by contacting
+    electrified platforms or by enemies, that will try to chase you.
 
 
-    At some point you will get a Gun that you can use to kill enemies. To do it, you
-    will need to hold Left Mouse Button. A blue cone will appear, that will damage
-    enemies. But enemies will regenerate outside of a cone.
+    At some
+    point you will get a Gun that you can use to kill enemies. To do it, you will
+    need to hold Left Mouse Button. A blue cone will appear, that will damage enemies.
+    But enemies will regenerate outside of a cone.
 
 
-    You will encounter multiple closed doors. To open the door you need to press "E"
-    near the button of the same color. You can press it by yourself or using your
-    clone.
+    You will encounter multiple
+    closed doors. To open the door you need to press "E" near the button of the same
+    color. You can press it by yourself or using your clone.
 
 
-    To pause the game press ESC'
+    To pause the game
+    press ESC'
 --- !u!222 &2050607780
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17106,34 +17092,38 @@ MonoBehaviour:
   m_Text: 'Your goal in this game is to pass through 5 rooms.
 
 
-    In many rooms you will be able to control synchroniously moving clones, that you
-    can create by stepping on blue platforms. If you have activated clones a blue
-    indicator will appear near your healthbar.
+    In many rooms
+    you will be able to control synchroniously moving clones, that you can create
+    by stepping on blue platforms. If you have activated clones a blue indicator
+    will appear near your healthbar.
 
 
-    You can freeze the movement of a clone by holding Right Mouse Button. But It will
-    decrease the health of a clone.
+    You can freeze the movement of a clone
+    by holding Right Mouse Button. But It will decrease the health of a clone.
 
 
-    You can create a new clone if the previous one disappears. But if you die, the
-    game will start from the checkpoint.
+    You
+    can create a new clone if the previous one disappears. But if you die, the game
+    will start from the checkpoint.
 
 
-    You or your clone can die by contacting electrified platforms or by enemies, that
-    will try to chase you.
+    You or your clone can die by contacting
+    electrified platforms or by enemies, that will try to chase you.
 
 
-    At some point you will get a Gun that you can use to kill enemies. To do it, you
-    will need to hold Left Mouse Button. A blue cone will appear, that will damage
-    enemies. But enemies will regenerate outside of a cone.
+    At some
+    point you will get a Gun that you can use to kill enemies. To do it, you will
+    need to hold Left Mouse Button. A blue cone will appear, that will damage enemies.
+    But enemies will regenerate outside of a cone.
 
 
-    You will encounter multiple closed doors. To open the door you need to press "E"
-    near the button of the same color. You can press it by yourself or using your
-    clone.
+    You will encounter multiple
+    closed doors. To open the door you need to press "E" near the button of the same
+    color. You can press it by yourself or using your clone.
 
 
-    To pause the game press ESC'
+    To pause the game
+    press ESC'
 --- !u!222 &2071273075
 CanvasRenderer:
   m_ObjectHideFlags: 0
