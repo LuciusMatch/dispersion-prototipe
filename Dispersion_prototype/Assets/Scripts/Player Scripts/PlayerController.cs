@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     float jumpForce = 8.0f;
 
 
+    public bool movementRelativeToCam; //forward and right of a character is relative to forward and right of a camera
     public Vector3 forvardRelative;
     public Vector3 rightRelative;
 
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
         customgravity = GetComponent<ConstantForce>();
         playerHealth = GetComponent<PlayerHealth>();
 
-        GetMovmentDir();
+        
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
@@ -48,6 +49,9 @@ public class PlayerController : MonoBehaviour
         string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
         transform.position = GameObject.Find(lastcheckpointname).transform.position;
         hasGun = checkPointManager.hadGun;
+
+        movementRelativeToCam = GameObject.Find("Options Manager").GetComponent<OptionsManager>().movementRelativeToCamOption;
+        GetMovmentDir();
     }
 
     // Update is called once per frame
@@ -76,10 +80,10 @@ public class PlayerController : MonoBehaviour
         //}
 
         if ((hasGun) && Input.GetMouseButtonDown(0))
-            transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(true);  //DUMB!! NEED TO CHANGE IT
 
         if ((hasGun) && Input.GetMouseButtonUp(0))
-            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);  //DUMB! NEED TO CHANGE IT
 
 
     }
@@ -100,16 +104,23 @@ public class PlayerController : MonoBehaviour
 
     public void GetMovmentDir()
     {
-        moveforvard = Camera.main.transform.forward;
-        moveforvard.y = 0;
-        moveforvard = moveforvard.normalized;
+        if (movementRelativeToCam)
+        {
+            moveforvard = Camera.main.transform.forward;
+            moveforvard.y = 0;
+            moveforvard = moveforvard.normalized;
+
+            moveright = Camera.main.transform.right;
+            moveright.y = 0;
+            moveright = moveright.normalized;
+        }
+        else
+        {
+            moveforvard = transform.forward;
+            moveright = transform.right;
+        }
 
         forvardRelative = transform.InverseTransformDirection(moveforvard);
-
-        moveright = Camera.main.transform.right;
-        moveright.y = 0;
-        moveright = moveright.normalized;
-
         rightRelative = transform.InverseTransformDirection(moveright);
     }
 
@@ -134,5 +145,11 @@ public class PlayerController : MonoBehaviour
             playerHealth.DecreaseHP();
         }
         //curHealth -= Time.deltaTime * damagingSpeed;
+    }
+
+    public void ChangeMovementRelation()
+    {
+        movementRelativeToCam = !movementRelativeToCam;
+        GetMovmentDir();
     }
 }
