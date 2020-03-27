@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
-    private static CheckPointManager instance;
+    public static CheckPointManager instance;
 
     public int lastCheckPoint;
 

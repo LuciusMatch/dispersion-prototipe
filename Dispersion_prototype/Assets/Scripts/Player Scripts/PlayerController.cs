@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
-    Vector3 movement;                   // The vector to store the direction of the player's movement.
+    public Vector3 movement;                   // The vector to store the direction of the player's movement.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
     ConstantForce customgravity;        // Gravity bassed on a Vector UP
 
@@ -45,12 +45,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        checkPointManager = GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>();
+        checkPointManager = CheckPointManager.instance.GetComponent<CheckPointManager>();
         string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
         transform.position = GameObject.Find(lastcheckpointname).transform.position;
         hasGun = checkPointManager.hadGun;
 
-        movementRelativeToCam = GameObject.Find("Options Manager").GetComponent<OptionsManager>().movementRelativeToCamOption;
+        SetMovementRelation();
         GetMovmentDir();
     }
 
@@ -126,11 +126,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Gun")
-        {
-            hasGun = true;
-            Destroy(other.gameObject);
-        }
+       // if (other.tag == "Gun")
+     //  {
+      //      hasGun = true;
+      //      Destroy(other.gameObject);
+       // }
 
         if (other.tag == "Death")
         {
@@ -147,9 +147,9 @@ public class PlayerController : MonoBehaviour
         //curHealth -= Time.deltaTime * damagingSpeed;
     }
 
-    public void ChangeMovementRelation()
+    public void SetMovementRelation()
     {
-        movementRelativeToCam = !movementRelativeToCam;
+        movementRelativeToCam = OptionsManager.instance.GetComponent<OptionsManager>().movementRelativeToCamOption;
         GetMovmentDir();
     }
 }
