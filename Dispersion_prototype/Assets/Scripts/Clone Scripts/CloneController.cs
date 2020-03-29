@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class CloneController : MonoBehaviour
@@ -55,6 +56,18 @@ public class CloneController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if ((!playerController.movementRelativeToCam) && (reversemovement))  //FOR PLAYTEST
+        {
+            reversemovement = false;
+            mirrormovementX = true;
+        }
+
+        if ((playerController.movementRelativeToCam) && (mirrormovementX))   //FOR PLAYTEST
+        {
+            reversemovement = true;
+            mirrormovementX = false;
+        }
+
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -87,10 +100,15 @@ public class CloneController : MonoBehaviour
     }
     private void Update()
     {
+        GetMovmentDir(); // DUMB!
         cloneIndicator.enabled = true; //Really bad!
 
         if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
+
+        {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
+            transform.GetChild(0).Find("Gun").GetComponent<Renderer>().material.SetColor("_BaseColor", playerController.gunColor);
+        }
         if ((playerController.hasGun) && Input.GetMouseButtonUp(0))
             transform.GetChild(0).Find("Gun").gameObject.SetActive(false);
 

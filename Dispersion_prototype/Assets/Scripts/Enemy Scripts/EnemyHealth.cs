@@ -15,14 +15,14 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]
     float regenerationSpeed = 30;
 
-    [SerializeField]
-    float damagingSpeed = 60;
+    public PlayerController playercontroller;
 
     // Start is called before the first frame update
     void Start()
     {
         healthbar = transform.Find("HealthBar").gameObject;
         helthbarlenght = healthbar.transform.localScale;
+        playercontroller = GameObject.Find("Player").GetComponent<PlayerController>(); //Change player to instance!
     }
 
     // Update is called once per frame
@@ -56,7 +56,7 @@ public class EnemyHealth : MonoBehaviour
     {
         if (other.tag == "GunArea")
         {
-            curHealth -= Time.deltaTime * damagingSpeed;
+            curHealth -= Time.deltaTime * playercontroller.gunDamage;
         }
     }
 }

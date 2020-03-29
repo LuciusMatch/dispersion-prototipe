@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -23,11 +24,17 @@ public class PlayerController : MonoBehaviour
     float jumpForce = 8.0f;
 
 
-    public bool movementRelativeToCam; //forward and right of a character is relative to forward and right of a camera
+    public bool movementRelativeToCam = true; //forward and right of a character is relative to forward and right of a camera
     public Vector3 forvardRelative;
     public Vector3 rightRelative;
 
     public bool hasGun = false;
+    public bool usingGun = false; //FOR PLAYTEST
+
+
+
+    public int gunDamage = 60; //CHANGE IT TO WEAPON SCRIPT
+    public Color gunColor; //CHANGE IT TO WEAPON SCRIPT
 
     public Animator animator;
     // Start is called before the first frame update
@@ -57,12 +64,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         // Store the input axes.
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
         if (hasGun) animator.SetBool("HasGun", true);
         else animator.SetBool("HasGun", false);
+
+        if (usingGun) animator.SetBool("UsingGun", true);
+        else animator.SetBool("UsingGun", false);
 
         if (h != 0 || v != 0)
             animator.SetBool("IsRunning", true);
@@ -80,10 +91,18 @@ public class PlayerController : MonoBehaviour
         //}
 
         if ((hasGun) && Input.GetMouseButtonDown(0))
+        {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(true);  //DUMB!! NEED TO CHANGE IT
+            transform.GetChild(0).Find("Gun").GetComponent<Renderer>().material.SetColor("_BaseColor", gunColor);
+            usingGun = true;
+        }
 
         if ((hasGun) && Input.GetMouseButtonUp(0))
+
+        {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(false);  //DUMB! NEED TO CHANGE IT
+            usingGun = false;
+        }
 
 
     }
@@ -136,6 +155,13 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth.Death();
         }
+        ///////////////////////////////////////////////////////////////////// PLAYTEST ONLY
+        if (other.name == "CamSwith_4_5(1)")
+        {
+            movementRelativeToCam = true;
+            GetMovmentDir();
+        }
+        ///////////////////////////////////////////////////////////////////// PLAYTEST ONLY
     }
 
     private void OnTriggerStay(Collider other)

@@ -25,7 +25,7 @@ public class PlayerTurning : MonoBehaviour
     }
     void Turning()
     {
-        if (playerController.hasGun) //if a player has gun, then character turns to the coursor, if not, then to the movement direction 
+        if (playerController.usingGun) //if a player has gun, then character turns to the coursor, if not, then to the movement direction 
         {
             Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit floorHit;
@@ -36,7 +36,8 @@ public class PlayerTurning : MonoBehaviour
                 Vector3 playerToMouse = floorHit.point - transform.position;
                 playerToMouse.y = 0;
                 Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-                transform.rotation = newRotation;
+                transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.deltaTime * 10f);
+                //transform.rotation = newRotation;
             }
         }
 

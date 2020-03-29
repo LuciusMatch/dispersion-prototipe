@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5bbb91d16bcebb4da7cb029b67198c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turningspeed: 5
 --- !u!1 &804362149599194345
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,12 +453,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkPointManager: {fileID: 0}
   speed: 6
+  movement: {x: 0, y: 0, z: 0}
   moveforvard: {x: 0, y: 0, z: 0}
   moveright: {x: 0, y: 0, z: 0}
   movementRelativeToCam: 0
   forvardRelative: {x: 0, y: 0, z: 0}
   rightRelative: {x: 0, y: 0, z: 0}
   hasGun: 0
+  gunDamage: 60
+  gunColor: {r: 0, g: 1, b: 1, a: 1}
   animator: {fileID: 0}
 --- !u!114 &6873392073265955075
 MonoBehaviour:
@@ -1024,9 +1028,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!54 &2312522930177494713
 Rigidbody:

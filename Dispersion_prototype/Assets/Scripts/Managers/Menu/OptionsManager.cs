@@ -20,7 +20,10 @@ public class OptionsManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        movementRelativeToCamOption = PlayerPrefs.GetInt("MovementRelativeCam") != 0;
+        if (PlayerPrefs.HasKey("MovementRelativeCam"))
+            movementRelativeToCamOption = PlayerPrefs.GetInt("MovementRelativeCam") != 0;
+        else
+            movementRelativeToCamOption = true;
     }
 
     void Start()
