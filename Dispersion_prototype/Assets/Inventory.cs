@@ -11,7 +11,8 @@ public class Inventory : MonoBehaviour
 
     public int space = 5;
 
-    public List<Item> items = new List<Item>();
+    public List<Item> originalItems = new List<Item>();
+    public List<Item> cloneItems = new List<Item>();
 
     void Awake()
     {
@@ -22,12 +23,14 @@ public class Inventory : MonoBehaviour
     {
         if (!item.isDefaultItem)
         {
-            if (items.Count >= space)
+            if (originalItems.Count >= space)
             {
                 Debug.Log("Not enough space");
                 return false;
             }
-            items.Add(item);
+
+            originalItems.Add(item);
+            cloneItems.Add(item);
 
             if (onItemChangedCallback != null)
                 onItemChangedCallback.Invoke();
@@ -37,7 +40,8 @@ public class Inventory : MonoBehaviour
 
     public void Remove(Item item)
     {
-        items.Remove(item);
+        originalItems.Remove(item);
+        cloneItems.Remove(item);
 
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();
