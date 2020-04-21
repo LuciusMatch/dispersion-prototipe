@@ -32,6 +32,9 @@ public class CloningController : MonoBehaviour
             newclone.GetComponent<CloneHealth>().cloningController = this.GetComponent<CloningController>();
             //Chane cloneOriginTransform.rotation to some rotation similar to rotation of a player relative to cloning platform of maybe use local-world-local in clone turning script
 
+            newclone.GetComponent<Inventory>().inventoryItems.AddRange(other.GetComponent<Inventory>().inventoryItems); //adding all items to clone inventory NOT WORKING
+            
+            //GameObject.Find("Canvas_Levels").GetComponent<Inventory_UI>().inventories.Add(this.GetComponent<Inventory>()); //adding inventory to the list of inventories
 
             if (reversemovement)
                 newclone.GetComponent<CloneController>().reversemovement = true;

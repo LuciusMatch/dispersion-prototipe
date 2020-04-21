@@ -4,54 +4,60 @@ using UnityEngine;
 
 public class Inventory_UI : MonoBehaviour
 {
-    public Transform itemsOriginalParent;
-    public Transform itemsCloneParent;
-    public GameObject inventoryUI;
-    Inventory inventory;
 
-    Inventory_Slot[] ogiginalSlots;
-    Inventory_Slot[] cloneSlots;
+    public GameObject inventoryUIlayer;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    GameObject singleCharacterInventoryUI; //Prefab to be used
+
+    public List<Inventory> inventories;
+
+    
+
     void Start()
     {
-        inventory = Inventory.instance;
-        inventory.onItemChangedCallback += UpdateUI;
+        inventories.Add(GameObject.FindWithTag("Player").GetComponent<Inventory>());
+        
+        foreach (Inventory inventory in inventories)
+        {
+            //inventory.onItemChangedCallback += UpdateUI(inventory);  //NOT WORKING, DON'T KNOW WHY
+            inventory.inventoryUI = Instantiate(singleCharacterInventoryUI, inventory.gameObject.transform);
+        }
 
-        ogiginalSlots = itemsOriginalParent.GetComponentsInChildren<Inventory_Slot>();
-        cloneSlots = itemsCloneParent.GetComponentsInChildren<Inventory_Slot>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        StickToCharacter();
+
         if (Input.GetButtonDown("Inventory"))
         {
             SwitchInventoryUI();
         }
     }
 
-    void UpdateUI()
+    void UpdateUI(Inventory inventory)
     {
-        for (int i = 0; i < ogiginalSlots.Length; i++)
+        Inventory_Slot[] slots = inventory.inventoryUI.GetComponentsInChildren<Inventory_Slot>();
+
+        for (int i = 0; i < inventory.space; i++)
         {
-            if (i < inventory.originalItems.Count)
+            if (i < inventory.inventoryItems.Count)
             {
-                ogiginalSlots[i].AddItem(inventory.originalItems[i]);
-                cloneSlots[i].AddItem(inventory.cloneItems[i]);
+                slots[i].AddItem(inventory.inventoryItems[i]);
             }
             else
             {
-                ogiginalSlots[i].ClearSlot();
-                cloneSlots[i].ClearSlot();
+                slots[i].ClearSlot();
             }
         }
     }
 
     public void SwitchInventoryUI ()
     {
-        inventoryUI.SetActive(!inventoryUI.activeSelf);
-        if (inventoryUI.active == true)
+        inventoryUIlayer.SetActive(!inventoryUIlayer.activeSelf);
+        if (inventoryUIlayer.active == true)
         {
             Time.timeScale = 0.1f;
             Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -62,4 +68,14 @@ public class Inventory_UI : MonoBehaviour
             Time.fixedDeltaTime = 0.02F * Time.timeScale;
         }
     }
+
+    public void StickToCharacter()
+    {
+        foreach (Inventory inventory in inventories)
+        {
+            //inventory.inventoryUI.transform.position = inventory.gameObject.transform.position;
+        }
+    }
+
+
 }

@@ -6,11 +6,12 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
 
-    private bool PlayerIn = false;
+    private bool characterIn = false;
+    public GameObject Interactor;
 
     void Update()
     {
-        if (!PlayerIn)
+        if (!characterIn)
             return;
 
         if (Input.GetButton("Use") == true)
@@ -22,11 +23,13 @@ public class Interactable : MonoBehaviour
         if (other.tag == "GunArea")
             return;
 
-        if (PlayerIn)
+        if (characterIn)
             return;
 
-        PlayerIn = (other.tag == "Player" || other.tag == "Clone");
+        characterIn = (other.tag == "Player" || other.tag == "Clone");
 
+        Interactor = other.gameObject;
+        //Debug.Log(Interactor.name + " in interacting!");
         GameObject.Find("Help_text").GetComponent<Text>().text = "press 'E' to use";
 
     }
@@ -36,11 +39,13 @@ public class Interactable : MonoBehaviour
         if (other.tag == "GunArea")
             return;
 
-        if (!PlayerIn)
+        if (!characterIn)
             return;
 
-        PlayerIn = !(other.tag == "Player" || other.tag == "Clone");
-
+        characterIn = !(other.tag == "Player" || other.tag == "Clone");
+        
+        Interactor = null;
+        
         GameObject.Find("Help_text").GetComponent<Text>().text = "";
     }
 

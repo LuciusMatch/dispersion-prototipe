@@ -13,9 +13,14 @@ public class Item_PickUp : Interactable
 
     void PickUp()
     {
-        GameObject.Find("Canvas_Levels").GetComponent<Inventory_UI>().SwitchInventoryUI();
-        Debug.Log("Picking up " + item.name);
-        bool wasPickedUp = Inventory.instance.Add(item);
+        //GameObject.Find("Canvas_Levels").GetComponent<Inventory_UI>().SwitchInventoryUI();
+
+        bool wasPickedUp = Interactor.GetComponent<Inventory>().Add(item);
+
+        Debug.Log("Picking up by" + Interactor.transform.name);
+        Debug.Log("Picking up by" + Interactor.transform.name);
+        Debug.Log("Picking up by" + Interactor.transform.name);
+        Debug.Log("Picking up by" + Interactor.transform.name);
         if (wasPickedUp)
         {
             GameObject.Find("Help_text").GetComponent<Text>().text = ""; //FOR PLAYTESTING

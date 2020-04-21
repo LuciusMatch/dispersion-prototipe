@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 804362149599194336}
   - component: {fileID: 804362149599194339}
   - component: {fileID: 6873392073265955075}
+  - component: {fileID: 4188021890213693937}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -460,6 +461,7 @@ MonoBehaviour:
   forvardRelative: {x: 0, y: 0, z: 0}
   rightRelative: {x: 0, y: 0, z: 0}
   hasGun: 0
+  usingGun: 0
   gunDamage: 60
   gunColor: {r: 0, g: 1, b: 1, a: 1}
   animator: {fileID: 0}
@@ -477,6 +479,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthdecreaseSpeed: 20
   healthBar: {fileID: 0}
+--- !u!114 &4188021890213693937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804362149599194345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e329a1b44eb3fc440baff2cf20e47902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  space: 4
+  originalItems: []
 --- !u!1 &2183699294035105912
 GameObject:
   m_ObjectHideFlags: 0
