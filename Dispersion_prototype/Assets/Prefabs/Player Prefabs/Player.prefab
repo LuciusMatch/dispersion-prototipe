@@ -492,7 +492,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   space: 4
-  originalItems: []
+  inventoryItems: []
+  inventoryUI: {fileID: 0}
 --- !u!1 &2183699294035105912
 GameObject:
   m_ObjectHideFlags: 0
