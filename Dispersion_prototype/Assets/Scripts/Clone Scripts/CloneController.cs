@@ -162,7 +162,7 @@ public class CloneController : MonoBehaviour
         if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
         {
             if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable")
+                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
             {
                 cloneHealth.DecreaseHP();
             }

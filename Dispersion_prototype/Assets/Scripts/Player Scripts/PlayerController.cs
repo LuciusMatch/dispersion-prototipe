@@ -85,11 +85,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
 
-        //    playerRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        //}
 
         if (hasGun && Input.GetMouseButtonDown(0))
         {
@@ -155,7 +151,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
             {
                 if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable")
+                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
                 {
                     Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
                     Debug.Log("Stopped by " + hit.transform.name);
@@ -217,6 +213,14 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Gravitation")  //Lifting a layer above gravitation plate
         {
             canFloat = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Gravitation") 
+        {
+            canFloat = false;
         }
     }
 
