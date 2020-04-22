@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         customgravity = GetComponent<ConstantForce>();
         playerHealth = GetComponent<PlayerHealth>();
-        turningObject = transform.FindChild("PlayerTurning").gameObject;
+        turningObject = transform.Find("PlayerTurning").gameObject;
 
 
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
