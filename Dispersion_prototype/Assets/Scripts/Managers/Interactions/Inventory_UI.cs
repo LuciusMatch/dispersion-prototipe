@@ -11,8 +11,7 @@ public class Inventory_UI : MonoBehaviour
     GameObject singleCharacterInventoryUI; //Prefab to be used
 
     public List<Inventory> inventories;
-
-    
+    public int offsetY = 100; // offset of the inventory above the player's head
 
     void Start()
     {
@@ -20,26 +19,24 @@ public class Inventory_UI : MonoBehaviour
         
         foreach (Inventory inventory in inventories)
         {
-            //inventory.onItemChangedCallback += UpdateUI(inventory);  //NOT WORKING, DON'T KNOW WHY
-            inventory.inventoryUI = Instantiate(singleCharacterInventoryUI, inventory.gameObject.transform);
+            inventory.onItemChangedCallback += UpdateUI;
+            inventory.inventoryUI = Instantiate(singleCharacterInventoryUI, inventoryUIlayer.gameObject.transform);
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        StickToCharacter();
-
         if (Input.GetButtonDown("Inventory"))
         {
             SwitchInventoryUI();
+            StickToCharacter();
         }
     }
 
     void UpdateUI(Inventory inventory)
     {
-        Inventory_Slot[] slots = inventory.inventoryUI.GetComponentsInChildren<Inventory_Slot>();
+        Inventory_Slot[] slots = inventoryUIlayer.GetComponentsInChildren<Inventory_Slot>();
 
         for (int i = 0; i < inventory.space; i++)
         {
@@ -57,7 +54,7 @@ public class Inventory_UI : MonoBehaviour
     public void SwitchInventoryUI ()
     {
         inventoryUIlayer.SetActive(!inventoryUIlayer.activeSelf);
-        if (inventoryUIlayer.active == true)
+        if (inventoryUIlayer.activeSelf)
         {
             Time.timeScale = 0.1f;
             Time.fixedDeltaTime = 0.02F * Time.timeScale;
@@ -74,8 +71,10 @@ public class Inventory_UI : MonoBehaviour
         foreach (Inventory inventory in inventories)
         {
             //inventory.inventoryUI.transform.position = inventory.gameObject.transform.position;
+            Vector3 pos = Camera.main.WorldToScreenPoint(GameManager.Instance.player.transform.position);
+            inventory.inventoryUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(2 * pos.x, 2 * pos.y + offsetY);
+
         }
     }
-
 
 }
