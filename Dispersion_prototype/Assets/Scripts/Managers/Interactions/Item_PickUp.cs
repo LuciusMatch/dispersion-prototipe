@@ -18,9 +18,7 @@ public class Item_PickUp : Interactable
         bool wasPickedUp = Interactor.GetComponent<Inventory>().Add(item);
 
         Debug.Log("Picking up by" + Interactor.transform.name);
-        Debug.Log("Picking up by" + Interactor.transform.name);
-        Debug.Log("Picking up by" + Interactor.transform.name);
-        Debug.Log("Picking up by" + Interactor.transform.name);
+
         if (wasPickedUp)
         {
             GameObject.Find("Help_text").GetComponent<Text>().text = ""; //FOR PLAYTESTING
