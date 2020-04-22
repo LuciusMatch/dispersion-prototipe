@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 659558352711740549}
   m_Layer: 0
   m_Name: Button (1)
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d64bd710d8b44d54a9654b102fcdcf44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Interactor: {fileID: 0}
   door: {fileID: 0}
 --- !u!1 &659558353387403352
 GameObject:
@@ -114,6 +115,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:

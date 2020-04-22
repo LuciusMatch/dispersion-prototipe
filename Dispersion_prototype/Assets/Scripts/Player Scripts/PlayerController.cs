@@ -31,20 +31,24 @@ public class PlayerController : MonoBehaviour
     public bool hasGun = false;
     public bool usingGun = false; //FOR PLAYTEST
 
-
+    bool canFloat = false;
+    bool floatingFlag = false;
+    Vector3 startPositionFloating;
 
     public int gunDamage = 60; //CHANGE IT TO WEAPON SCRIPT
     public Color gunColor; //CHANGE IT TO WEAPON SCRIPT
 
     public Animator animator;
+    private GameObject turningObject;
     // Start is called before the first frame update
     void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         customgravity = GetComponent<ConstantForce>();
         playerHealth = GetComponent<PlayerHealth>();
+        turningObject = transform.FindChild("PlayerTurning").gameObject;
 
-        
+
         customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
@@ -75,9 +79,6 @@ public class PlayerController : MonoBehaviour
         if (usingGun) animator.SetBool("UsingGun", true);
         else animator.SetBool("UsingGun", false);
 
-        if (h != 0 || v != 0)
-            animator.SetBool("IsRunning", true);
-        else animator.SetBool("IsRunning", false);
         // Move the player around the scene.
         Move(h, v);
     }
@@ -90,20 +91,27 @@ public class PlayerController : MonoBehaviour
         //    playerRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         //}
 
-        if ((hasGun) && Input.GetMouseButtonDown(0))
+        if (hasGun && Input.GetMouseButtonDown(0))
         {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(true);  //DUMB!! NEED TO CHANGE IT
             transform.GetChild(0).Find("Gun").GetComponent<Renderer>().material.SetColor("_BaseColor", gunColor);
             usingGun = true;
         }
 
-        if ((hasGun) && Input.GetMouseButtonUp(0))
+        if (hasGun && Input.GetMouseButtonUp(0))
 
         {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(false);  //DUMB! NEED TO CHANGE IT
             usingGun = false;
         }
 
+        if (canFloat && Input.GetKeyDown(KeyCode.Space)) //ADD smooth getting down!
+        {
+            if (!floatingFlag) startPositionFloating = turningObject.transform.position;
+            else turningObject.transform.position = startPositionFloating;
+
+            floatingFlag = !floatingFlag;
+        }
 
     }
 
@@ -112,14 +120,49 @@ public class PlayerController : MonoBehaviour
         // Set the movement vector based on the axis input.
         movement = (h * moveright + v * moveforvard);
         // Normalise the movement vector and make it proportional to the speed per second.
+
         movement = movement.normalized * speed * Time.deltaTime;
+
 
         Debug.DrawRay(transform.position, moveforvard * 5, Color.blue);
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
+        Debug.DrawRay(transform.position, movement * 5, Color.yellow);
+        WallStop();
+
+        if (movement.magnitude != 0)
+            animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
+
+        if (floatingFlag)
+        {
+            Floating();
+            playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        }
+        else
+        {
+            playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+
         // Move the player to it's current position plus the movement.
         playerRigidbody.MovePosition(transform.position + movement);
     }
 
+
+    private void WallStop()
+    {
+         RaycastHit hit;
+
+            if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
+            {
+                if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
+                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable")
+                {
+                    Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
+                    Debug.Log("Stopped by " + hit.transform.name);
+                    movement = Vector3.zero;
+                }
+            }
+    }
 
     public void GetMovmentDir()
     {
@@ -170,7 +213,17 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth.DecreaseHP();
         }
-        //curHealth -= Time.deltaTime * damagingSpeed;
+
+        if (other.tag == "Gravitation")  //Lifting a layer above gravitation plate
+        {
+            canFloat = true;
+        }
+    }
+
+    void Floating()
+    {
+        float floatingHight = Mathf.Sin(Time.time)/1.2f + 1.5f;
+        turningObject.transform.position = Vector3.Lerp(turningObject.transform.position, startPositionFloating + new Vector3(0, floatingHight, 0), 0.07f);
     }
 
     public void SetMovementRelation()

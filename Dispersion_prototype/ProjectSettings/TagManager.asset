@@ -13,6 +13,7 @@ TagManager:
   - Gun
   - Ghost
   - SpaceTrigger
+  - Gravitation
   layers:
   - Default
   - TransparentFX

@@ -75,9 +75,7 @@ public class CloneController : MonoBehaviour
         if (playerController.hasGun) animator.SetBool("HasGun", true);
         else animator.SetBool("HasGun", false);
 
-        if (h != 0 || v != 0)
-            animator.SetBool("IsRunning", true);
-        else animator.SetBool("IsRunning", false);
+
 
         if (mirrormovementX == true)
         {
@@ -141,12 +139,35 @@ public class CloneController : MonoBehaviour
         // Normalise the movement vector and make it proportional to the speed per second.
         movement = movement.normalized * speed * Time.deltaTime;
 
+        movement = movement.normalized * playerController.movement.magnitude;  //Here is the problem! 
+
         Debug.DrawRay(transform.position, moveforvard * 5, Color.blue);
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
         // Move the player to it's current position plus the movement.
+
+        WallHurt();
+
+
+        if (movement.magnitude != 0)
+            animator.SetBool("IsRunning", true);
+        else animator.SetBool("IsRunning", false);
+
         cloneRigidbody.MovePosition(transform.position + movement);
     }
 
+    private void WallHurt()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
+        {
+            if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
+                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable")
+            {
+                cloneHealth.DecreaseHP();
+            }
+        }
+    }
 
     void GetMovmentDir() // relative movement
     {
