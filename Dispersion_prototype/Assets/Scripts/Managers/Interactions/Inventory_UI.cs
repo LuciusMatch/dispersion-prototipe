@@ -72,7 +72,7 @@ public class Inventory_UI : MonoBehaviour
         {
             //inventory.inventoryUI.transform.position = inventory.gameObject.transform.position;
             Vector3 pos = Camera.main.WorldToScreenPoint(GameManager.Instance.player.transform.position);
-            inventory.inventoryUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(2 * pos.x, 2 * pos.y + offsetY);
+            inventory.inventoryUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(pos.x, 2 * pos.y + offsetY);
 
         }
     }
