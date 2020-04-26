@@ -33,8 +33,6 @@ public class CloneHealth : MonoBehaviour
 
         if (curHealth <= 0)
             CloneDeath();
-
-        Debug.Log(curHealth);
     }
 
     public void DecreaseHP()

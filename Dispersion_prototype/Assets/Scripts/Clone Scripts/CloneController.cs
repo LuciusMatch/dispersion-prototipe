@@ -31,6 +31,14 @@ public class CloneController : MonoBehaviour
     public bool mirrormovementX = false;
     public bool mirrormovementZ = false;
 
+
+    Vector3 playerPosition;
+    GameObject spherePlayerPosition;
+    GameObject sphereCloneGoalPosition;
+    Vector3 cloneGoalPosition; //Where the clone shoul be when it's stuck
+    bool connectionBreak;
+    bool connectionFlag;
+
     public Animator animator;
 
     void Start()
@@ -147,6 +155,15 @@ public class CloneController : MonoBehaviour
 
         WallHurt();
 
+        if (connectionBreak)
+        {
+            WaitForReturn();
+        }
+        else
+        {
+            connectionFlag = false;
+            cloneRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
 
         if (movement.magnitude != 0)
             animator.SetBool("IsRunning", true);
@@ -164,9 +181,26 @@ public class CloneController : MonoBehaviour
             if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
                 hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
             {
-                cloneHealth.DecreaseHP();
+                connectionBreak = true;
+                if (connectionBreak != connectionFlag)
+                {
+                    playerPosition = player.transform.position;
+
+                    cloneGoalPosition = transform.position - playerPosition;
+
+                    spherePlayerPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where player broke the connection
+                    //sphereCloneGoalPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where clone should be 
+
+                    Destroy(spherePlayerPosition.GetComponent<Collider>());
+                    //Destroy(sphereCloneGoalPosition.GetComponent<Collider>());
+
+
+                    connectionFlag = connectionBreak;
+                }
+           
             }
         }
+        
     }
 
     void GetMovmentDir() // relative movement
@@ -199,5 +233,52 @@ public class CloneController : MonoBehaviour
         //curHealth -= Time.deltaTime * damagingSpeed;
     }
 
+    void WaitForReturn()
+    {
+
+        Vector3 relativeVector = playerPosition - player.transform.position;
+
+        
+
+        if (Mathf.Abs(relativeVector.magnitude) > 0.5)
+        {
+            //sphereCloneGoalPosition.transform.position = player.transform.position + cloneGoalPosition;
+            spherePlayerPosition.transform.position = playerPosition;
+            
+            cloneRigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            cloneHealth.DecreaseHP();
+            returnClone();
+        }
+        else
+        {
+            cloneRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            connectionBreak = false; 
+        }
+
+    }
+
+
+    void returnClone()
+    {
+        RaycastHit hit;
+        Vector3 vectorToCheck = transform.position - (player.transform.position + cloneGoalPosition);
+
+        if (Physics.Linecast(transform.position, (player.transform.position + cloneGoalPosition),  out hit))
+        {
+            if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Camera Switch" &&
+                   hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
+            {
+                return;
+            }
+        }
+        else transform.position = Vector3.Lerp(transform.position, (player.transform.position + cloneGoalPosition), 0.2f);
+
+        if (vectorToCheck.magnitude < 0.5)
+        {
+            cloneRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+           
+            connectionBreak = false;
+        }
+    }
 }
 
