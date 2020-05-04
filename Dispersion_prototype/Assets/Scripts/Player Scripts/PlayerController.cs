@@ -31,9 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool hasGun = false;
     public bool usingGun = false; //FOR PLAYTEST
 
-    bool canFloat = false;
-    bool floatingFlag = false;
-    Vector3 startPositionFloating;
+    bool floating;
 
     public int gunDamage = 60; //CHANGE IT TO WEAPON SCRIPT
     public Color gunColor; //CHANGE IT TO WEAPON SCRIPT
@@ -101,14 +99,6 @@ public class PlayerController : MonoBehaviour
             usingGun = false;
         }
 
-        if (canFloat && Input.GetKeyDown(KeyCode.Space)) //ADD smooth getting down!
-        {
-            if (!floatingFlag) startPositionFloating = turningObject.transform.position;
-            else turningObject.transform.position = startPositionFloating;
-
-            floatingFlag = !floatingFlag;
-        }
-
     }
 
     void Move(float h, float v)
@@ -129,36 +119,45 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("IsRunning", true);
         else animator.SetBool("IsRunning", false);
 
-        if (floatingFlag)
-        {
-            Floating();
-            playerRigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        }
-        else
-        {
-            playerRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
-        }
-
         // Move the player to it's current position plus the movement.
         playerRigidbody.MovePosition(transform.position + movement);
+
+        if (floating)
+        {
+            Floating();
+        }
+        else
+            turningObject.transform.localPosition = Vector3.Lerp(turningObject.transform.localPosition, new Vector3(0, 0, 0), 0.05f);
     }
 
 
     private void WallStop()
     {
-         RaycastHit hit;
+        RaycastHit hit;
 
-            if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
+        if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
+        {
+            if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
+                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
             {
-                if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
-                {
-                    Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
-                    Debug.Log("Stopped by " + hit.transform.name);
-                    movement = Vector3.zero;
-                }
+                Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
+                Debug.Log("Stopped by " + hit.transform.name);
+                movement = Vector3.zero;
             }
+
+            if (hit.transform.tag == "Simple Gravitation")
+            {
+                floating = true;
+            }
+
+        }
+        else
+        {
+            floating = false;
+        }
+
     }
+
 
     public void GetMovmentDir()
     {
@@ -209,25 +208,17 @@ public class PlayerController : MonoBehaviour
         {
             playerHealth.DecreaseHP();
         }
-
-        if (other.tag == "Gravitation")  //Lifting a layer above gravitation plate
-        {
-            canFloat = true;
-        }
     }
 
     private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Gravitation") 
-        {
-            canFloat = false;
-        }
+    { 
     }
 
     void Floating()
     {
-        float floatingHight = Mathf.Sin(Time.time)/1.2f + 1.5f;
-        turningObject.transform.position = Vector3.Lerp(turningObject.transform.position, startPositionFloating + new Vector3(0, floatingHight, 0), 0.07f);
+        float floatingHight = Mathf.Sin(Time.time*5)/1.5f + 1.5f;
+        turningObject.transform.localPosition = Vector3.Lerp(turningObject.transform.localPosition, 
+            new Vector3(0, floatingHight, 0) - turningObject.transform.TransformDirection(floatingHight * Vector3.forward), 0.05f);
     }
 
     public void SetMovementRelation()

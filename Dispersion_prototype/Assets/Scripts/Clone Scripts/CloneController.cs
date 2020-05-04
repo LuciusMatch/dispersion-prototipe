@@ -157,7 +157,7 @@ public class CloneController : MonoBehaviour
 
         if (connectionBreak)
         {
-            WaitForReturn();
+            //WaitForReturn(); // Not sure about this "return feature"
         }
         else
         {
@@ -181,22 +181,24 @@ public class CloneController : MonoBehaviour
             if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
                 hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
             {
-                connectionBreak = true;
-                if (connectionBreak != connectionFlag)
-                {
-                    playerPosition = player.transform.position;
+                cloneHealth.DecreaseHP();
 
-                    cloneGoalPosition = transform.position - playerPosition;
+                //connectionBreak = true;
+                //if (connectionBreak != connectionFlag) // Not sure about this "return feature"
+                //{
+                //    playerPosition = player.transform.position;
 
-                    spherePlayerPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where player broke the connection
-                    //sphereCloneGoalPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where clone should be 
+                //    cloneGoalPosition = transform.position - playerPosition;
 
-                    Destroy(spherePlayerPosition.GetComponent<Collider>());
-                    //Destroy(sphereCloneGoalPosition.GetComponent<Collider>());
+                //    spherePlayerPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where player broke the connection
+                //    //sphereCloneGoalPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where clone should be 
+
+                //    Destroy(spherePlayerPosition.GetComponent<Collider>());
+                //    //Destroy(sphereCloneGoalPosition.GetComponent<Collider>());
 
 
-                    connectionFlag = connectionBreak;
-                }
+                //    connectionFlag = connectionBreak;
+                //}
            
             }
         }
@@ -266,12 +268,12 @@ public class CloneController : MonoBehaviour
         if (Physics.Linecast(transform.position, (player.transform.position + cloneGoalPosition),  out hit))
         {
             if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Camera Switch" &&
-                   hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
+                   hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
             {
                 return;
             }
         }
-        else transform.position = Vector3.Lerp(transform.position, (player.transform.position + cloneGoalPosition), 0.2f);
+        else transform.position = Vector3.Lerp(transform.position, (player.transform.position + cloneGoalPosition), 0.05f);
 
         if (vectorToCheck.magnitude < 0.5)
         {

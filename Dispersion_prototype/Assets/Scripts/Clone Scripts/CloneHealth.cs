@@ -21,7 +21,7 @@ public class CloneHealth : MonoBehaviour
 
     void Start()
     {
-        healthdecreaseSpeed = 15;
+        healthdecreaseSpeed = 25;
         healthbar = transform.Find("HealthBar").gameObject;
         helthbarlenght = healthbar.transform.localScale;
     }
