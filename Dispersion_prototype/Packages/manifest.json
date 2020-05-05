@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.mybox": "https://github.com/Deadcows/MyBox.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.probuilder": "4.2.3",
     "com.unity.progrids": "3.0.3-preview.4",
@@ -45,6 +46,10 @@
     "com.vladfaust.unitywakatime": {
       "revision": "package",
       "hash": "b8a1d9f726608a3517fade7d045c7c629a57c302"
+    },
+    "com.mybox": {
+      "revision": "HEAD",
+      "hash": "fd40e688504294dfc4d0166934fbc38dab0da2b1"
     }
   }
 }

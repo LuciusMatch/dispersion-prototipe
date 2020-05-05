@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using MyBox;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,6 +8,8 @@ public enum EventType { Use, UseOnce }
 public class Interaction : MonoBehaviour
 {
     public EventType eventType;
+    [ConditionalField(nameof(eventType), false, EventType.Use, EventType.UseOnce)] public bool keycardRequired = false;
+    [ConditionalField(nameof(keycardRequired))] public int keycardID;
     public UnityEvent action;
 
     private bool alreadyUsed = false;
@@ -25,8 +28,15 @@ public class Interaction : MonoBehaviour
             && (other.tag == "Player" || other.tag == "Clone")
             && Input.GetButtonDown("Use"))
         {
-            action.Invoke();
-            alreadyUsed = true;
+            if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+            {
+                action.Invoke();
+                alreadyUsed = true;
+            }
+            else
+            {
+                Debug.Log("Keycard not collected yet");
+            }
         }
     }
 
