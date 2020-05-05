@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 659558352711740665}
   - component: {fileID: 659558352711740666}
-  - component: {fileID: 659558352711740549}
+  - component: {fileID: -2142096176295715034}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: Button
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 659558352711740548}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 45, y: 46.723866, z: -45}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 659558353387403353}
@@ -47,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 3.0000005, z: 1}
   m_Center: {x: 1, y: 1.5000002, z: -0.5}
---- !u!114 &659558352711740549
+--- !u!114 &-2142096176295715034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,11 +56,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 659558352711740548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d64bd710d8b44d54a9654b102fcdcf44, type: 3}
+  m_Script: {fileID: 11500000, guid: 189671d364dd6ea469f6ab1424d9dda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Interactor: {fileID: 0}
-  door: {fileID: 0}
+  eventType: 0
+  action:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &659558353387403352
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +75,7 @@ GameObject:
   - component: {fileID: 659558353387403356}
   - component: {fileID: 659558353387403355}
   m_Layer: 0
-  m_Name: Bolton_M_03_snaps002
+  m_Name: Bolton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +151,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1375255030641458, guid: a1c7b462aafc94746bed4b6921516f4d, type: 3}
       propertyPath: m_Name
-      value: PanelEm_02_snaps002
+      value: Panel
       objectReference: {fileID: 0}
     - target: {fileID: 4413698494682292, guid: a1c7b462aafc94746bed4b6921516f4d, type: 3}
       propertyPath: m_LocalPosition.x
