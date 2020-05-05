@@ -100509,7 +100509,7 @@ PrefabInstance:
     - target: {fileID: -2142096176295715034, guid: 64de5d7e16198ab4e85a0cf933498f2a,
         type: 3}
       propertyPath: action.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -2142096176295715034, guid: 64de5d7e16198ab4e85a0cf933498f2a,
         type: 3}
@@ -100524,7 +100524,7 @@ PrefabInstance:
     - target: {fileID: -2142096176295715034, guid: 64de5d7e16198ab4e85a0cf933498f2a,
         type: 3}
       propertyPath: action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
+      value: PlayAndWaitBeforeReverse
       objectReference: {fileID: 0}
     - target: {fileID: -2142096176295715034, guid: 64de5d7e16198ab4e85a0cf933498f2a,
         type: 3}
@@ -100565,6 +100565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: keycardRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2142096176295715034, guid: 64de5d7e16198ab4e85a0cf933498f2a,
+        type: 3}
+      propertyPath: action.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 659558352711740548, guid: 64de5d7e16198ab4e85a0cf933498f2a,
         type: 3}
