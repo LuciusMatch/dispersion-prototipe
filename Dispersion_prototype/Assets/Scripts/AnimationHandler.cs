@@ -8,7 +8,7 @@ public class AnimationHandler : MonoBehaviour
     private string clipName;
     private string reverseName;
     private bool crRunning = false;
-    private bool isReversed = false;
+    public bool isReversed = false;
 
     private void Awake()
     {

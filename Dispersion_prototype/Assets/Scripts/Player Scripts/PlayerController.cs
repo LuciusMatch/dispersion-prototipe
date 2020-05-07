@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "Death")
         {
+        
             playerHealth.Death();
         }
         ///////////////////////////////////////////////////////////////////// PLAYTEST ONLY
@@ -225,5 +226,11 @@ public class PlayerController : MonoBehaviour
     {
         movementRelativeToCam = OptionsManager.instance.GetComponent<OptionsManager>().movementRelativeToCamOption;
         GetMovmentDir();
+    }
+
+    public void DeathFreeze()
+    {
+        speed = 0;
+        turningObject.GetComponent<PlayerTurning>().turningspeed = 0;
     }
 }

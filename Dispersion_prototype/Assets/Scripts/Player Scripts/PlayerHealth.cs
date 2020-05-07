@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
+    PlayerController playerController;
+
     float maxHealth = 100;
     float curHealth = 100;
     [SerializeField]
@@ -13,11 +15,17 @@ public class PlayerHealth : MonoBehaviour
 
     public Slider healthBar;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerController = transform.GetComponent<PlayerController>();
+
         healthBar = GameObject.Find("PlayerHealthBar").GetComponent<Slider>();
         healthBar.value = maxHealth;
+
+        animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
     }
 
 
@@ -38,6 +46,15 @@ public class PlayerHealth : MonoBehaviour
 
     public void Death()
     {
+        StartCoroutine(DeathCoroutine());
+    }
+
+    IEnumerator DeathCoroutine()
+    {
+        animator.SetBool("Death", true); //DEATH ANIMATION
+        playerController.DeathFreeze();
+
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

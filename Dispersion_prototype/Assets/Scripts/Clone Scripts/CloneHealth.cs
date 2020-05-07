@@ -16,6 +16,8 @@ public class CloneHealth : MonoBehaviour
     float healthdecreaseSpeed;
     public CloningController cloningController;
 
+    public Animator animator;
+
     bool hasGun = false;
 
 
@@ -24,6 +26,8 @@ public class CloneHealth : MonoBehaviour
         healthdecreaseSpeed = 25;
         healthbar = transform.Find("HealthBar").gameObject;
         helthbarlenght = healthbar.transform.localScale;
+        animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
+
     }
 
    void UpdateHP()

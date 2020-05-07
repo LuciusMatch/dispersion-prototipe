@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerTurning : MonoBehaviour
 {
     [SerializeField]
-    float turningspeed = 5;
+    public float turningspeed = 5;
 
     float camRayLength = 100f;
     int floorMask;
