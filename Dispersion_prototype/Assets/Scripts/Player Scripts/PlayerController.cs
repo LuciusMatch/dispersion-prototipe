@@ -137,17 +137,20 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
         {
-            if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
+            if (!hit.transform.GetComponent<Collider>().isTrigger)
             {
-                Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
-                Debug.Log("Stopped by " + hit.transform.name);
-                movement = Vector3.zero;
-            }
+                if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
+                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
+                {
+                    Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
+                    Debug.Log("Stopped by " + hit.transform.name);
+                    movement = Vector3.zero;
+                }
 
-            if (hit.transform.tag == "Simple Gravitation")
-            {
-                floating = true;
+                if (hit.transform.tag == "Simple Gravitation")
+                {
+                    floating = true;
+                }
             }
 
         }

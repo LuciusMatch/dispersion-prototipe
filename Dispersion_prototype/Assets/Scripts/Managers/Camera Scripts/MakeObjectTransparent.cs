@@ -10,7 +10,9 @@ public class MakeObjectTransparent : MonoBehaviour
     /// 
     /// </summary>
     Transform player;
-    Transform transformHit;
+
+
+    RaycastHit[] hits = new RaycastHit[0];
 
     void Start()
     {
@@ -20,28 +22,54 @@ public class MakeObjectTransparent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit hit;
-
-        Debug.DrawLine(player.position, transform.position, Color.red); 
-
-        if (Physics.Linecast(transform.position, player.position, out hit))
+        //make them non-transp
+        if (hits.Length > 0)
         {
+            for (int i = 0; i < hits.Length; i++)
+            {
+                RaycastHit hit = hits[i];
+
+                if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
+                {
+                    hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = false;
+                }
+            }
+        }
+
+        Vector3 camToPlayer = player.position - transform.position;
+        hits = Physics.RaycastAll(transform.position, camToPlayer, camToPlayer.magnitude);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            RaycastHit hit = hits[i];
 
             if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
             {
-                if (hit.transform != transformHit && transformHit != null)
-                {
-                    transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
-                }
-
-                transformHit = hit.transform;
-                transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = true;
-            }
-            else
-            {
-                if (transformHit != null)
-                    transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
+                hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = true;
             }
         }
+
+        //RaycastHit hit;
+
+        Debug.DrawLine(player.position, transform.position, Color.red); 
+
+        //if (Physics.Linecast(transform.position, player.position, out hit))
+        //{
+
+        //    if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
+        //    {
+        //        if (hit.transform != transformHit && transformHit != null)
+        //        {
+        //            transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
+        //        }
+
+        //        transformHit = hit.transform;
+        //        transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = true;
+        //    }
+        //    else
+        //    {
+        //        if (transformHit != null)
+        //            transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
+        //    }
+        //}
     }
 }

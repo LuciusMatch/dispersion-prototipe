@@ -178,28 +178,31 @@ public class CloneController : MonoBehaviour
 
         if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
         {
-            if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
+            if (!hit.transform.GetComponent<Collider>().isTrigger)
             {
-                cloneHealth.DecreaseHP();
+                if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
+                hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
+                {
+                    cloneHealth.DecreaseHP();
 
-                //connectionBreak = true;
-                //if (connectionBreak != connectionFlag) // Not sure about this "return feature"
-                //{
-                //    playerPosition = player.transform.position;
+                    //connectionBreak = true;
+                    //if (connectionBreak != connectionFlag) // Not sure about this "return feature"
+                    //{
+                    //    playerPosition = player.transform.position;
 
-                //    cloneGoalPosition = transform.position - playerPosition;
+                    //    cloneGoalPosition = transform.position - playerPosition;
 
-                //    spherePlayerPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where player broke the connection
-                //    //sphereCloneGoalPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where clone should be 
+                    //    spherePlayerPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where player broke the connection
+                    //    //sphereCloneGoalPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere); //Where clone should be 
 
-                //    Destroy(spherePlayerPosition.GetComponent<Collider>());
-                //    //Destroy(sphereCloneGoalPosition.GetComponent<Collider>());
+                    //    Destroy(spherePlayerPosition.GetComponent<Collider>());
+                    //    //Destroy(sphereCloneGoalPosition.GetComponent<Collider>());
 
 
-                //    connectionFlag = connectionBreak;
-                //}
-           
+                    //    connectionFlag = connectionBreak;
+                    //}
+
+                }
             }
         }
         
