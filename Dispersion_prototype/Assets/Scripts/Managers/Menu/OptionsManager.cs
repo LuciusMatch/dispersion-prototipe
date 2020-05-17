@@ -5,33 +5,19 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
-    public bool movementRelativeToCamOption;
+    public static bool movementRelativeToCamOption;
 
-    public static OptionsManager instance;
     void Awake()
     {
-        if (instance == null)
+        if (!PlayerPrefs.HasKey("MovementRelativeCam"))
         {
-            instance = this;
-            DontDestroyOnLoad(instance);
+            PlayerPrefs.SetInt("MovementRelativeCam", 1);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        if (PlayerPrefs.HasKey("MovementRelativeCam"))
-            movementRelativeToCamOption = PlayerPrefs.GetInt("MovementRelativeCam") != 0;
-        else
-            movementRelativeToCamOption = true;
-    }
-
-    void Start()
-    {
         
+        movementRelativeToCamOption = PlayerPrefs.GetInt("MovementRelativeCam") != 0;
     }
 
-    public void ChangeMovementRelativeCam()
+    public static void ChangeMovementRelativeCam()
     {
         movementRelativeToCamOption = !movementRelativeToCamOption;
         int boolInt = movementRelativeToCamOption ? 1 : 0;

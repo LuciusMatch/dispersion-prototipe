@@ -13,8 +13,12 @@ public class CheckPoint : MonoBehaviour
 
     private void Awake()
     {
-        checkPointManager = CheckPointManager.instance;
         checkPointNumber = int.Parse(gameObject.name);
+    }
+
+    private void Start()
+    {
+        checkPointManager = CheckPointManager.instance;
     }
 
     private void OnTriggerEnter(Collider other)

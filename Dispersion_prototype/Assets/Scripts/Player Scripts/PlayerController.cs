@@ -226,7 +226,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetMovementRelation()
     {
-        movementRelativeToCam = OptionsManager.instance.GetComponent<OptionsManager>().movementRelativeToCamOption;
+        movementRelativeToCam = OptionsManager.movementRelativeToCamOption;
         GetMovmentDir();
     }
 

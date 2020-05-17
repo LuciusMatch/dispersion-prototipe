@@ -9,13 +9,12 @@ public class UpdateOptions : MonoBehaviour
     public Toggle cameraRelativeMovement;
     void Start()
     {
-        optionsManager = OptionsManager.instance.GetComponent<OptionsManager>();
         cameraRelativeMovement = transform.Find("LevelRelativeToggle").GetComponent<Toggle>();
-        cameraRelativeMovement.isOn = optionsManager.movementRelativeToCamOption;
+        cameraRelativeMovement.isOn = OptionsManager.movementRelativeToCamOption;
     }
 
     void SetOptionsUI()
     {
-        cameraRelativeMovement.isOn = !optionsManager.movementRelativeToCamOption;
+        cameraRelativeMovement.isOn = !OptionsManager.movementRelativeToCamOption;
     }
 }

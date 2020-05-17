@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject mainCamera;
+    public Transform checkPointParent;
 
     public static GameManager Instance { get; private set; }
 
