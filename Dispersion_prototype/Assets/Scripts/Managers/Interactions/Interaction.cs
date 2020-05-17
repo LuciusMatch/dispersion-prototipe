@@ -13,7 +13,7 @@ public class Interaction : MonoBehaviour
     public UnityEvent action;
 
     private bool alreadyUsed = false;
-    private Collider other;
+    private List<Collider> others = new List<Collider>();
 
     void Awake()
     {
@@ -23,32 +23,32 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
-        if (other != null
-            && (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
-            && (other.tag == "Player" || other.tag == "Clone")
-            && Input.GetButtonDown("Use"))
+        foreach (Collider other in others)
         {
-            if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+            if (Input.GetButtonDown("Use")
+                && (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
+                && (other.tag == "Player" || other.tag == "Clone"))
             {
-                action.Invoke();
-                alreadyUsed = true;
-            }
-            else
-            {
-                Debug.Log("Keycard not collected yet");
+                if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+                {
+                    action.Invoke();
+                    alreadyUsed = true;
+                }
+                else
+                {
+                    Debug.Log("Keycard not collected yet");
+                }
             }
         }
     }
 
-    // MAY CAUSE PROBLEMS IF MULTIPLE OBJECTS CAN ENTER THE TRIGGER AT THE SAME TIME – AND ONLY ONE LEAVES
-
     void OnTriggerEnter(Collider other)
     {
-        this.other = other;
+        others.Add(other);
     }
 
     void OnTriggerExit(Collider other)
     {
-        this.other = null;
+        others.Remove(other);
     }
 }
