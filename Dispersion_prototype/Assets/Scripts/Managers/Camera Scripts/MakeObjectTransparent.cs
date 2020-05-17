@@ -12,7 +12,7 @@ public class MakeObjectTransparent : MonoBehaviour
     Transform player;
 
 
-    RaycastHit[] hits = new RaycastHit[0];
+    List<RaycastHit> hits = new List<RaycastHit>();
 
     void Start()
     {
@@ -23,30 +23,12 @@ public class MakeObjectTransparent : MonoBehaviour
     void Update()
     {
         //make them non-transp
-        if (hits.Length > 0)
-        {
-            for (int i = 0; i < hits.Length; i++)
-            {
-                RaycastHit hit = hits[i];
-
-                if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
-                {
-                    hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = false;
-                }
-            }
-        }
+        MakeTransparent(false);
 
         Vector3 camToPlayer = player.position - transform.position;
-        hits = Physics.RaycastAll(transform.position, camToPlayer, camToPlayer.magnitude);
-        for (int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit hit = hits[i];
+        hits = new List<RaycastHit>(Physics.RaycastAll(transform.position, camToPlayer, camToPlayer.magnitude));
 
-            if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
-            {
-                hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = true;
-            }
-        }
+        MakeTransparent(true);
 
         //RaycastHit hit;
 
@@ -71,5 +53,16 @@ public class MakeObjectTransparent : MonoBehaviour
         //            transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
         //    }
         //}
+    }
+
+    void MakeTransparent(bool transparent = true)
+    {
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.transform != null && hit.transform.gameObject.GetComponent<WallTransparency>() != null)
+            {
+                hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = transparent;
+            }
+        }
     }
 }

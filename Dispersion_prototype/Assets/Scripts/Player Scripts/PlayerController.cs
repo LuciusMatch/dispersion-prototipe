@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
                     hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
                 {
                     Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
-                    Debug.Log("Stopped by " + hit.transform.name);
+                    //Debug.Log("Stopped by " + hit.transform.name);
                     movement = Vector3.zero;
                 }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EventType { Use, UseOnce }
+public enum EventType { Use, UseOnce, PickUp }
 public class Interaction : MonoBehaviour
 {
     public EventType eventType;
@@ -25,18 +25,24 @@ public class Interaction : MonoBehaviour
     {
         foreach (Collider other in others)
         {
-            if (Input.GetButtonDown("Use")
-                && (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
-                && (other.tag == "Player" || other.tag == "Clone"))
+            if (Input.GetButtonDown("Use") && (other.tag == "Player" || other.tag == "Clone"))
             {
-                if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+                if (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
+                {
+                    if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+                    {
+                        action.Invoke();
+                        alreadyUsed = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Keycard not collected yet");
+                    }
+                }
+                else if (eventType == EventType.PickUp)
                 {
                     action.Invoke();
-                    alreadyUsed = true;
-                }
-                else
-                {
-                    Debug.Log("Keycard not collected yet");
+                    Destroy(gameObject);
                 }
             }
         }
