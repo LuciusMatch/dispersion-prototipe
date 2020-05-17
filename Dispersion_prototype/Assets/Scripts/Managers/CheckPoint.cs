@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public int checkpointnumber;
-
-    CheckPointManager checkPointManager;
     public Transform CameraPoint;
     public int camerasize;
     public bool isortographic;
+    [HideInInspector] public int checkPointNumber;
 
-    private void Start()
+    private CheckPointManager checkPointManager;
+
+    private void Awake()
     {
-        gameObject.name = string.Format("CheckPoint " + checkpointnumber);
-        checkPointManager = GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>();
+        checkPointManager = CheckPointManager.instance;
+        checkPointNumber = int.Parse(gameObject.name);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "Player")
         {
-            checkPointManager.lastCheckPoint = checkpointnumber;
+            checkPointManager.lastCheckPoint = checkPointNumber;
             checkPointManager.hadGun = other.GetComponent<PlayerController>().hasGun;
         }
     }

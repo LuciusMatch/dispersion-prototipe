@@ -6,24 +6,23 @@ public class CameraLoadAfterCkeckPoint : MonoBehaviour
 {
     CheckPointManager checkPointManager;
     Camera cam;
-    // Start is called before the first frame update
+
     void Start()
     {
-        cam = this.GetComponent<Camera>();
+        cam = GetComponent<Camera>();
+        checkPointManager = CheckPointManager.instance;
+        CheckPoint lastCheckPoint = checkPointManager.GetLastCheckPoint();
 
-        checkPointManager = GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>();
-        string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
-        CheckPoint lastcheckpoint = GameObject.Find(lastcheckpointname).GetComponent<CheckPoint>();
-        transform.position = lastcheckpoint.CameraPoint.position;
-        transform.rotation = lastcheckpoint.CameraPoint.rotation;
-        cam.orthographic = lastcheckpoint.isortographic;
-        if (lastcheckpoint.isortographic)
-            cam.orthographicSize = lastcheckpoint.camerasize;
-    }
+        if (lastCheckPoint == null)
+        {
+            Debug.LogError("Initial checkpoint not found!");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.position = lastCheckPoint.CameraPoint.position;
+        transform.rotation = lastCheckPoint.CameraPoint.rotation;
+        cam.orthographic = lastCheckPoint.isortographic;
+
+        if (lastCheckPoint.isortographic)
+            cam.orthographicSize = lastCheckPoint.camerasize;
     }
 }

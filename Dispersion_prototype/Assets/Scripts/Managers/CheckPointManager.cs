@@ -5,6 +5,7 @@ using UnityEngine;
 public class CheckPointManager : MonoBehaviour
 {
     public static CheckPointManager instance;
+    private CheckPoint[] checkPoints;
 
     public int lastCheckPoint;
 
@@ -14,11 +15,30 @@ public class CheckPointManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            checkPoints = GetComponentsInChildren<CheckPoint>();
             DontDestroyOnLoad(instance);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    public CheckPoint GetLastCheckPoint()
+    {
+        return GetCheckPointById(lastCheckPoint);
+    }
+
+    public CheckPoint GetCheckPointById(int id)
+    {
+        foreach (CheckPoint checkPoint in checkPoints)
+        {
+            if (checkPoint.checkPointNumber == id)
+            {
+                return checkPoint;
+            }
+        }
+
+        return null;
     }
 }

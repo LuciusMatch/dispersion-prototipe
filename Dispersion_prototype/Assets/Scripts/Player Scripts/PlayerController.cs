@@ -54,9 +54,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        checkPointManager = CheckPointManager.instance.GetComponent<CheckPointManager>();
-        string lastcheckpointname = string.Format("CheckPoint " + checkPointManager.lastCheckPoint);
-        transform.position = GameObject.Find(lastcheckpointname).transform.position;
+        checkPointManager = CheckPointManager.instance;
+        transform.position = checkPointManager.GetLastCheckPoint().transform.position;
         hasGun = checkPointManager.hadGun;
 
         SetMovementRelation();
