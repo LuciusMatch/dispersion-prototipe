@@ -17,7 +17,7 @@ public class OptionsManager : MonoBehaviour
         movementRelativeToCamOption = PlayerPrefs.GetInt("MovementRelativeCam") != 0;
     }
 
-    public static void ChangeMovementRelativeCam()
+    public void ChangeMovementRelativeCam()
     {
         movementRelativeToCamOption = !movementRelativeToCamOption;
         int boolInt = movementRelativeToCamOption ? 1 : 0;
