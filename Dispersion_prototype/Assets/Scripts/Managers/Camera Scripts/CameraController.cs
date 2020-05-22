@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 
     bool cameraIsLocked;
 
+    [SerializeField]
     private bool movecam;
 
     void Start()
@@ -75,7 +76,11 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraPoint.rotation, cameraSpeed);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, cameraSize, cameraSpeed);
 
-        if (transform == cameraPoint && cam.orthographicSize == cameraSize) movecam = false;
+        if (transform.rotation == cameraPoint.rotation && cam.orthographicSize == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.1) //For some reason position == position doesn't work
+        {
+            movecam = false;
+            GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
+        }
     }
 
     private void MoveCameraPerspective()
@@ -84,7 +89,11 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraPoint.rotation, cameraSpeed);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, cameraSize, cameraSpeed);
 
-        if (transform == cameraPoint && cam.fieldOfView == cameraSize) movecam = false;
+        if (transform.rotation == cameraPoint.rotation && cam.fieldOfView == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.1)
+        {
+            movecam = false;
+            GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
+        }
     }
 
     private void FollowPlayerOrtographic() //TEMPORARY SOLUTION

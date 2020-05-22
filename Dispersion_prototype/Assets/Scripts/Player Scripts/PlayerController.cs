@@ -169,9 +169,10 @@ public class PlayerController : MonoBehaviour
             moveforvard.y = 0;
             moveforvard = moveforvard.normalized;
 
-            moveright = Camera.main.transform.right;
-            moveright.y = 0;
-            moveright = moveright.normalized;
+            //moveright = Camera.main.transform.right;
+            //moveright.y = 0;
+            //moveright = moveright.normalized;
+            moveright = -Vector3.Cross(moveforvard, transform.up).normalized;
         }
         else
         {
