@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
+    [SerializeField]
+    public List<GameObject> clones;
     public GameObject mainCamera;
     public Transform checkPointParent;
 

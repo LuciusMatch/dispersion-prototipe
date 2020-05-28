@@ -6,6 +6,7 @@ public class KeycardInventory : MonoBehaviour
 {
     public List<GameObject> indicators = new List<GameObject>();
 
+    [SerializeField]
     private List<int> keycards = new List<int>();
 
     private void Start()

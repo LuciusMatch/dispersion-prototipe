@@ -48,6 +48,7 @@ public class CloneHealth : MonoBehaviour
      public void CloneDeath()
     {
         cloningController.platformactivated = false;
+        GameManager.Instance.clones.Remove(this.gameObject);
         Destroy(this.gameObject);
     }
 }

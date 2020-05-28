@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         hasGun = checkPointManager.hadGun;
 
         SetMovementRelation();
-        GetMovmentDir();
+        GetMovmentDir(GameManager.Instance.mainCamera.transform);
     }
 
     // Update is called once per frame
@@ -161,11 +161,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    public void GetMovmentDir()
+    public void GetMovmentDir(Transform camPos)
     {
         if (movementRelativeToCam)
         {
-            moveforvard = Camera.main.transform.forward;
+            moveforvard = camPos.forward;
             moveforvard.y = 0;
             moveforvard = moveforvard.normalized;
 
@@ -201,7 +201,7 @@ public class PlayerController : MonoBehaviour
         if (other.name == "CamSwith_4_5(1)")
         {
             movementRelativeToCam = true;
-            GetMovmentDir();
+            GetMovmentDir(GameManager.Instance.mainCamera.transform);
         }
         ///////////////////////////////////////////////////////////////////// PLAYTEST ONLY
     }
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
     public void SetMovementRelation()
     {
         movementRelativeToCam = OptionsManager.movementRelativeToCamOption;
-        GetMovmentDir();
+        GetMovmentDir(GameManager.Instance.mainCamera.transform);
     }
 
     public void DeathFreeze()

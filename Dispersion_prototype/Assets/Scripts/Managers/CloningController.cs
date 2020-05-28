@@ -29,6 +29,9 @@ public class CloningController : MonoBehaviour
             //Debug.DrawLine(cloneOriginTransform.position, cloneposition, Color.black, 15);
 
             GameObject newclone = Instantiate(clonegameobject, cloneposition, cloneOriginTransform.rotation, cloneOriginTransform.parent);
+
+            GameManager.Instance.clones.Add(newclone);//add a clone to list in manager
+
             newclone.GetComponent<CloneHealth>().cloningController = this.GetComponent<CloningController>();
             //Chane cloneOriginTransform.rotation to some rotation similar to rotation of a player relative to cloning platform of maybe use local-world-local in clone turning script
 

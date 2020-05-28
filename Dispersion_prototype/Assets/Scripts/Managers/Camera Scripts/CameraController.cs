@@ -76,10 +76,10 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraPoint.rotation, cameraSpeed);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, cameraSize, cameraSpeed);
 
-        if (transform.rotation == cameraPoint.rotation && cam.orthographicSize == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.1) //For some reason position == position doesn't work
+        if (transform.rotation == cameraPoint.rotation && cam.orthographicSize == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.01) //For some reason position == position doesn't work
         {
             movecam = false;
-            GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
+            //GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
         }
     }
 
@@ -89,10 +89,10 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraPoint.rotation, cameraSpeed);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, cameraSize, cameraSpeed);
 
-        if (transform.rotation == cameraPoint.rotation && cam.fieldOfView == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.1)
+        if (transform.rotation == cameraPoint.rotation && cam.fieldOfView == cameraSize && Vector3.Magnitude(transform.position - cameraPoint.position) < 0.01)
         {
             movecam = false;
-            GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
+            //GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir();
         }
     }
 
@@ -104,7 +104,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, playerCam.rotation, 0.05f);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 6.5f, 0.05f);
 
-
+        GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir(playerCam);
         //Vector3 newPosition = GameManager.Instance.player.transform.position + cameraPoint.position;
 
         //transform.position = Vector3.Lerp(transform.position, newPosition, cameraSpeed);

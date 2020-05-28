@@ -39,6 +39,8 @@ public class CloneController : MonoBehaviour
     bool connectionBreak;
     bool connectionFlag;
 
+    bool relativeMovementFalg;
+
     public Animator animator;
 
     void Start()
@@ -68,9 +70,10 @@ public class CloneController : MonoBehaviour
         {
             reversemovement = false;
             mirrormovementX = true;
+            relativeMovementFalg = true;
         }
 
-        if ((playerController.movementRelativeToCam) && (mirrormovementX))   //FOR PLAYTEST
+        if ((playerController.movementRelativeToCam) && (mirrormovementX) && relativeMovementFalg)   //FOR PLAYTEST
         {
             reversemovement = true;
             mirrormovementX = false;
@@ -85,15 +88,15 @@ public class CloneController : MonoBehaviour
 
 
 
-        if (mirrormovementX == true)
-        {
-            h *= -1;
-        }
+            //if (mirrormovementX == true)
+            //{
+            //    h *= -1;
+            //}
 
-        if (mirrormovementZ == true)
-        {
-            v *= -1;
-        }
+            //if (mirrormovementZ == true)
+            //{
+            //    v *= -1;
+            //}
 
         if (holdposition == false)
         {
@@ -141,14 +144,15 @@ public class CloneController : MonoBehaviour
 
     void CopyMove(float h, float v)
     {
-
+        
         // Set the movement vector based on the axis input.
         movement = (h * moveright + v * moveforvard);
         // Normalise the movement vector and make it proportional to the speed per second.
         movement = movement.normalized * speed * Time.deltaTime;
 
-        movement = movement.normalized * playerController.movement.magnitude;  //Here is the problem! 
+        movement = movement.normalized * playerController.movement.magnitude;
 
+        Debug.DrawRay(transform.position, new Vector3(h,0,v) * 5, Color.green);
         Debug.DrawRay(transform.position, moveforvard * 5, Color.blue);
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
         // Move the player to it's current position plus the movement.
@@ -214,8 +218,19 @@ public class CloneController : MonoBehaviour
         moveforvard = transform.TransformDirection(playerController.forvardRelative);
         moveforvard = moveforvard.normalized;
 
-        moveright = transform.TransformDirection(playerController.rightRelative);
-        moveright = moveright.normalized;
+        //moveright = transform.TransformDirection(playerController.rightRelative);
+        //moveright = moveright.normalized;
+        moveright = -Vector3.Cross(moveforvard, transform.up).normalized;
+
+        if (mirrormovementZ == true)
+        {
+            moveforvard *= -1;
+        }
+
+        if (mirrormovementX == true)
+        {
+            moveright *= -1;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

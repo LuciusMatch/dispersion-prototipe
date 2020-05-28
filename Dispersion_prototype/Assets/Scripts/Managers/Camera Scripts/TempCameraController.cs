@@ -46,7 +46,7 @@ public class TempCameraController : MonoBehaviour
 
             if ((cam.transform.position == CameraPoint.position) && (cam.transform.rotation == CameraPoint.rotation))
             {
-                playerController.GetMovmentDir();
+                //playerController.GetMovmentDir();
                 movecam = false;
             }
         }

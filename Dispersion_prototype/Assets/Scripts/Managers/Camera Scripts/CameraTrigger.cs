@@ -25,6 +25,8 @@ public class CameraTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir(cameraTransform);
+
         if (other.tag == "Player")
         {
             if (perspectiveFollow)
@@ -40,7 +42,8 @@ public class CameraTrigger : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other)
-    {
+    { 
+
         cam.orthographic = true;
 
         if (other.tag == "Player" && !perspectiveFollow)

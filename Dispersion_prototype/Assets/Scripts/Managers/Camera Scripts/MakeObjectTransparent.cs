@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class MakeObjectTransparent : MonoBehaviour
 {
-    /// <summary>
-    /// Rays should be casted for clones too
-    /// Make multiple objects transparent
-    /// 
-    /// </summary>
     Transform player;
 
+    List<Vector3> raysToClonesPos = new List<Vector3>();
 
     List<RaycastHit> hits = new List<RaycastHit>();
 
@@ -20,42 +16,33 @@ public class MakeObjectTransparent : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //make them non-transp
         MakeTransparent(false);
 
         Vector3 camToPlayer = player.position - transform.position;
-        hits = new List<RaycastHit>(Physics.RaycastAll(transform.position, camToPlayer, camToPlayer.magnitude));
+
+        hits = new List<RaycastHit>();
+        
+        if (GameManager.Instance.clones.Count > 0)
+        {
+            GetAllClones();
+
+            foreach (Vector3 rayToClone in raysToClonesPos)
+            {
+                hits.AddRange(new List<RaycastHit>(Physics.RaycastAll(transform.position, rayToClone, rayToClone.magnitude)));
+            }
+        }
+
+        hits.AddRange(new List<RaycastHit>(Physics.RaycastAll(transform.position, camToPlayer, camToPlayer.magnitude)));
 
         MakeTransparent(true);
 
-        //RaycastHit hit;
-
         Debug.DrawLine(player.position, transform.position, Color.red); 
-
-        //if (Physics.Linecast(transform.position, player.position, out hit))
-        //{
-
-        //    if (hit.transform.gameObject.GetComponent<WallTransparency>() != null)
-        //    {
-        //        if (hit.transform != transformHit && transformHit != null)
-        //        {
-        //            transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
-        //        }
-
-        //        transformHit = hit.transform;
-        //        transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = true;
-        //    }
-        //    else
-        //    {
-        //        if (transformHit != null)
-        //            transformHit.gameObject.GetComponent<WallTransparency>().transparentOn = false;
-        //    }
-        //}
     }
 
-    void MakeTransparent(bool transparent = true)
+    void MakeTransparent(bool transparent)
     {
         foreach (RaycastHit hit in hits)
         {
@@ -63,6 +50,15 @@ public class MakeObjectTransparent : MonoBehaviour
             {
                 hit.transform.gameObject.GetComponent<WallTransparency>().transparentOn = transparent;
             }
+        }
+    }
+     void GetAllClones()
+    {
+        raysToClonesPos = new List<Vector3>();
+        foreach (GameObject clone in GameManager.Instance.clones)
+        {
+            raysToClonesPos.Add(clone.transform.position - transform.position);
+            Debug.DrawLine(clone.transform.position, transform.position, Color.red);
         }
     }
 }
