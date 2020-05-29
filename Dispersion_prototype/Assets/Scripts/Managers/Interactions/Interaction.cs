@@ -32,7 +32,7 @@ public class Interaction : MonoBehaviour
                 {
                     if (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
                     {
-                        if (!keycardRequired || GameManager.Instance.player.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+                        if (!keycardRequired || other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
                         {
                             action.Invoke();
                             alreadyUsed = true;

@@ -423,6 +423,7 @@ GameObject:
   - component: {fileID: 708365596209402262}
   - component: {fileID: 6618675363751653539}
   - component: {fileID: 4409059361625607443}
+  - component: {fileID: -3658347155712372829}
   m_Layer: 0
   m_Name: Clone
   m_TagString: Clone
@@ -570,6 +571,7 @@ MonoBehaviour:
   curHealth: 100
   healthdecreaseSpeed: 20
   cloningController: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &4409059361625607443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -585,6 +587,23 @@ MonoBehaviour:
   space: 4
   inventoryItems: []
   inventoryUI: {fileID: 0}
+--- !u!114 &-3658347155712372829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708365596209402261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be9d5013b62eca4bab011b067ee8f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicators:
+  - {fileID: 2651039564628618963}
+  - {fileID: 740297478632170084}
+  - {fileID: 4909192687027131195}
+  - {fileID: 5974959226592590477}
 --- !u!1 &740297478632170084
 GameObject:
   m_ObjectHideFlags: 0

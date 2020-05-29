@@ -5340,6 +5340,7 @@ GameObject:
   - component: {fileID: 8379916128880444253}
   - component: {fileID: 8379916128880444254}
   - component: {fileID: 2245597886384566402}
+  - component: {fileID: 1558707961976038045}
   m_Layer: 0
   m_Name: Keycard
   m_TagString: Interactable
@@ -5394,14 +5395,13 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8065013676414198277, guid: 2690daf44e3e5b34a962e8668714d4b6,
-          type: 3}
-        m_MethodName: AddKeycard
-        m_Mode: 3
+      - m_Target: {fileID: 1558707961976038045}
+        m_MethodName: PickUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5409,3 +5409,16 @@ MonoBehaviour:
   actionOff:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1558707961976038045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379916128880444192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd7f8d6ec9436543a72493c9be6e82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keycardId: 1
