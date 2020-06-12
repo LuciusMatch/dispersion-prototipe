@@ -17,15 +17,41 @@ public class CloningController : MonoBehaviour
     [SerializeField]
     bool mirrorz = false;
 
+    private bool movingToCenter;
+
     public bool platformactivated = false;
-    
+
+    private void Update()
+    {
+        if (movingToCenter)
+        {
+            GameManager.Instance.player.GetComponent<PlayerController>().movement = Vector3.zero;
+            //GameManager.Instance.player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            Vector3 moveToVector = new Vector3(transform.position.x, GameManager.Instance.player.transform.position.y, transform.position.z);
+
+            GameManager.Instance.player.transform.position = 
+                Vector3.MoveTowards(GameManager.Instance.player.transform.position, moveToVector, 0.2f);
+
+            if (GameManager.Instance.player.transform.position == moveToVector)
+            {
+                movingToCenter = false;
+                //GameManager.Instance.player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                //GameManager.Instance.player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && platformactivated == false)
         {
+            movingToCenter = true;
             other.transform.parent = transform.parent;
+            
+            //Vector3 cloneposition = CalculatePosition(other.transform);
 
-            Vector3 cloneposition = CalculatePosition(other.transform);
+            Vector3 cloneposition = cloneOriginTransform.position + cloneOriginTransform.up*1.2f;
             //Debug.DrawLine(cloneOriginTransform.position, cloneposition, Color.black, 15);
 
             GameObject newclone = Instantiate(clonegameobject, cloneposition, cloneOriginTransform.rotation, cloneOriginTransform.parent);

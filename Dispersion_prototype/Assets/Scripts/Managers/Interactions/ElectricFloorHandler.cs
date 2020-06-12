@@ -15,6 +15,9 @@ public class ElectricFloorHandler : MonoBehaviour
         trigger = GetComponent<Collider>();
         particles = GetComponentInChildren<ParticleSystem>();
         emissiveMaterial = GetComponentInChildren<MeshRenderer>().material;
+
+        if (!isEnabled) TurnOff();
+        else TurnOn();
     }
 
     public void TurnOn()

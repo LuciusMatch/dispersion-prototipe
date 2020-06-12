@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float speed = 6f;            // The speed that the player will move at.
     public Vector3 movement;                   // The vector to store the direction of the player's movement.
+    public bool stoppedByClone;
+
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
     ConstantForce customgravity;        // Gravity bassed on a Vector UP
 
@@ -77,6 +79,7 @@ public class PlayerController : MonoBehaviour
         else animator.SetBool("UsingGun", false);
 
         // Move the player around the scene.
+
         Move(h, v);
     }
 
@@ -98,6 +101,10 @@ public class PlayerController : MonoBehaviour
             usingGun = false;
         }
 
+        if (GameManager.Instance.clones.Count == 0)
+        {
+            stoppedByClone = false;
+        }
     }
 
     void Move(float h, float v)
@@ -114,8 +121,11 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, movement * 5, Color.yellow);
         WallStop();
 
+        if (stoppedByClone)
+            movement = Vector3.zero;
+
         if (movement.magnitude != 0)
-            animator.SetBool("IsRunning", true);
+        animator.SetBool("IsRunning", true);
         else animator.SetBool("IsRunning", false);
 
         // Move the player to it's current position plus the movement.

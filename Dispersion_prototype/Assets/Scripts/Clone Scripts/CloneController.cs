@@ -106,6 +106,13 @@ public class CloneController : MonoBehaviour
                 CopyMove(h, v);
         }
 
+
+        // STOP PLAYER BY CLONE
+        if (movement.magnitude == 0 && (h != 0 && v != 0))
+            playerController.stoppedByClone = true;
+        else
+            playerController.stoppedByClone = false;
+        //
     }
     private void Update()
     {
@@ -157,6 +164,8 @@ public class CloneController : MonoBehaviour
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
         // Move the player to it's current position plus the movement.
 
+        
+
         WallHurt();
 
         if (connectionBreak)
@@ -178,6 +187,8 @@ public class CloneController : MonoBehaviour
 
     private void WallHurt()
     {
+        
+
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
@@ -188,7 +199,7 @@ public class CloneController : MonoBehaviour
                 hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
                 {
                     cloneHealth.DecreaseHP();
-
+                    movement = Vector3.zero;
                     //connectionBreak = true;
                     //if (connectionBreak != connectionFlag) // Not sure about this "return feature"
                     //{

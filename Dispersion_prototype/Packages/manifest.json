@@ -45,7 +45,7 @@
   "lock": {
     "com.mybox": {
       "revision": "HEAD",
-      "hash": "88d5358490c2fd6b2b9246046f158653af41d343"
+      "hash": "2c528c81aced53ec1fabc7c09919ee2f0347a7b5"
     },
     "com.vladfaust.unitywakatime": {
       "revision": "package",
