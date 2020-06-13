@@ -147,6 +147,9 @@ public class CloneController : MonoBehaviour
         {
             cloneHealth.DecreaseHP();
         }
+
+        if (player.GetComponent<PlayerHealth>().curHealth <= 0)
+            animator.SetBool("Death", true);
     }
 
     void CopyMove(float h, float v)

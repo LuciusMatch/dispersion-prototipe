@@ -47,11 +47,11 @@ public class windController : MonoBehaviour
 
     void WindOn()
     {
-        player.GetComponent<ConstantForce>().force -= transform.forward * 20f;
+        //player.GetComponent<PlayerController>()
     }
 
     void WindOff()
     {
-        player.GetComponent<ConstantForce>().force += transform.forward * 20f;
+        //player.GetComponent<ConstantForce>().force += transform.forward * 20f;
     }
 }

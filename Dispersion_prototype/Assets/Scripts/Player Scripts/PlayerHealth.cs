@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     PlayerController playerController;
 
     float maxHealth = 100;
-    float curHealth = 100;
+    public float curHealth = 100;
     [SerializeField]
     float healthdecreaseSpeed = 20;
 

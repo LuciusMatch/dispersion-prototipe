@@ -51,4 +51,5 @@ public class CloneHealth : MonoBehaviour
         GameManager.Instance.clones.Remove(this.gameObject);
         Destroy(this.gameObject);
     }
+
 }
