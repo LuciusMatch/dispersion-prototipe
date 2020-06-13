@@ -20,15 +20,17 @@ public class CheckPointManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(instance);
+
+            if (lastCheckPointOverride >= 0)
+            {
+                lastCheckPoint = lastCheckPointOverride;
+                lastCheckPointOverride = -1;
+                Debug.Log("Checkpoints reset");
+            }
         }
         else
         {
             Destroy(gameObject);
-        }
-
-        if (lastCheckPointOverride >= 0)
-        {
-            lastCheckPoint = lastCheckPointOverride;
         }
     }
 
