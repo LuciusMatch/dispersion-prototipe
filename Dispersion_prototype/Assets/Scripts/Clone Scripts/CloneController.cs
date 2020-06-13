@@ -108,7 +108,7 @@ public class CloneController : MonoBehaviour
 
 
         // STOP PLAYER BY CLONE
-        if (movement.magnitude == 0 && (h != 0 && v != 0))
+        if (movement.magnitude == 0 && (h != 0 || v != 0))
             playerController.stoppedByClone = true;
         else
             playerController.stoppedByClone = false;
@@ -188,7 +188,6 @@ public class CloneController : MonoBehaviour
     private void WallHurt()
     {
         
-
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
@@ -218,6 +217,10 @@ public class CloneController : MonoBehaviour
                     //}
 
                 }
+
+                if (hit.transform.tag == "Death")
+                    cloneHealth.CloneDeath();
+
             }
         }
         

@@ -160,6 +160,9 @@ public class PlayerController : MonoBehaviour
                 {
                     floating = true;
                 }
+
+                if (hit.transform.tag == "Death")
+                    playerHealth.Death();
             }
 
         }
