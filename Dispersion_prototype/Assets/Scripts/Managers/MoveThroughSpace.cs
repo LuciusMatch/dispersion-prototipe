@@ -16,7 +16,9 @@ public class MoveThroughSpace : MonoBehaviour
         if (transform.position.z <= -4317 && transform.position.z >= -4371)
         {
             Debug.Log("END!");
-            GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>().lastCheckPoint = 0;
+
+            CheckPointManager.lastCheckPoint = 0;
+            PlayerPrefs.DeleteKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
         }

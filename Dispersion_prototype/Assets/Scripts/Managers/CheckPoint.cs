@@ -25,7 +25,8 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            checkPointManager.lastCheckPoint = checkPointNumber;
+            CheckPointManager.lastCheckPoint = checkPointNumber;
+            PlayerPrefs.SetInt(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY, checkPointNumber);
             checkPointManager.hadGun = other.GetComponent<PlayerController>().hasGun;
         }
     }

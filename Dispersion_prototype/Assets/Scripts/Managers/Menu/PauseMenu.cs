@@ -51,7 +51,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-        GameObject.Find("CheckPoint Manager").GetComponent<CheckPointManager>().lastCheckPoint = 0;
+        CheckPointManager.lastCheckPoint = 0;
+        Destroy(CheckPointManager.instance);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
     }
 }
