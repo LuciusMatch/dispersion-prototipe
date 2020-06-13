@@ -7,6 +7,7 @@ public class CheckPointManager : MonoBehaviour
 {
     public static int lastCheckPoint;
     public const string PREFS_LAST_CHECKPOINT_KEY = "LastCheckpoint";
+    public const string PREFS_MAX_CHECKPOINT_KEY = "MaxCheckpoint";
 
     public static CheckPointManager instance;
     private CheckPoint[] checkPoints;
@@ -25,7 +26,6 @@ public class CheckPointManager : MonoBehaviour
             {
                 lastCheckPoint = lastCheckPointOverride;
                 lastCheckPointOverride = -1;
-                Debug.Log("Checkpoints reset");
             }
         }
         else
