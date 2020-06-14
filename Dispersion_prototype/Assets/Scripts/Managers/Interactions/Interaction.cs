@@ -24,6 +24,7 @@ public class Interaction : MonoBehaviour
 
     private void Update()
     {
+        others.RemoveAll(item => item == null);
         foreach (Collider other in others)
         {
             if (other.tag == "Player" || other.tag == "Clone")
