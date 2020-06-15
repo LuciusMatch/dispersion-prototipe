@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CameraController : MonoBehaviour
 {
     Camera cam;
@@ -13,6 +14,8 @@ public class CameraController : MonoBehaviour
 
     bool cameraIsLocked;
 
+    
+    
     [SerializeField]
     private bool movecam;
 
@@ -20,6 +23,7 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         movecam = false;
+
     }
 
     private void Update()
