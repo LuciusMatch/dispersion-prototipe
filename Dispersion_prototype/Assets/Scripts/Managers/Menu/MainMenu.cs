@@ -27,10 +27,7 @@ public class MainMenu : MonoBehaviour
         for (int i = 0; i < numberOfLevels; i++)
         {
             GameObject go = Instantiate(levelPrefab, levelSelectorContent);
-            foreach (Text text in go.GetComponentsInChildren<Text>())
-            {
-                text.text = "Level " + i;
-            }
+            go.GetComponent<MenuButton>().text = "Level " + i;
             Button btn = go.GetComponent<Button>();
             btn.interactable = (i <= PlayerPrefs.GetInt(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY, 0));
 
