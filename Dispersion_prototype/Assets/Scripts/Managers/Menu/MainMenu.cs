@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class MainMenu : MonoBehaviour
     public Button continueButton;
 
     public Button levelSelectorButton;
-    public Transform levelSelector;
+    public GameObject levelSelectorUI;
+    public Transform levelSelectorContent;
     public GameObject levelPrefab;
 
     private bool gameInProgress;
@@ -24,7 +26,7 @@ public class MainMenu : MonoBehaviour
 
         for (int i = 0; i < numberOfLevels; i++)
         {
-            GameObject go = Instantiate(levelPrefab, levelSelector);
+            GameObject go = Instantiate(levelPrefab, levelSelectorContent);
             foreach (Text text in go.GetComponentsInChildren<Text>())
             {
                 text.text = "Level " + i;
@@ -42,6 +44,7 @@ public class MainMenu : MonoBehaviour
         if (gameInProgress)
         {
             Debug.Log("Are you sure you want to start a new game? All your progress wil be lost.");
+            CheckPointManager.lastCheckPoint = 0;
         }
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -62,10 +65,24 @@ public class MainMenu : MonoBehaviour
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        PlayerPrefs.DeleteKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
-        PlayerPrefs.DeleteKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
+        //PlayerPrefs.DeleteKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
+        //PlayerPrefs.DeleteKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
 #else
         Application.Quit();
 #endif
+    }
+
+    public void Levels()
+    {
+        gameObject.SetActive(false);
+        levelSelectorUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(levelSelectorContent.GetComponentInChildren<Button>().gameObject);
+    }
+
+    public void ReturnFromLevels()
+    {
+        gameObject.SetActive(true);
+        levelSelectorUI.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(levelSelectorButton.gameObject);
     }
 }

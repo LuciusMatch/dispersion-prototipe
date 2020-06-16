@@ -2,57 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
 
-    public GameObject pauseMenuUI;
     public GameObject optionsMenuUI;
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
-    }
+
+    public GameObject pauseFirstButton;
+    public GameObject optionsButton;
+    public GameObject optionsFirstButton;
 
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
-        optionsMenuUI.SetActive(false);
+        gameObject.SetActive(false);
         Time.timeScale = 1f;
-        gameIsPaused = false;
+        GameMenu.isPaused = false;
     }
 
-    void Pause ()
+    public void Pause()
     {
-        pauseMenuUI.SetActive(true);
+        gameObject.SetActive(true);
         Time.timeScale = 0f;
-        gameIsPaused = true;
+        EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 
     public void RestartGame()
     {
-        pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        gameIsPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void QuitGame()
+    public void MainMenu()
     {
-        pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        gameIsPaused = false;
-        CheckPointManager.lastCheckPoint = 0;
         Destroy(CheckPointManager.instance);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+        SceneManager.LoadScene(0);
+    }
+
+    public void Options()
+    {
+        gameObject.SetActive(false);
+        optionsMenuUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(optionsFirstButton);
+    }
+
+    public void ReturnFromOptions()
+    {
+        gameObject.SetActive(true);
+        optionsMenuUI.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(optionsButton);
     }
 }

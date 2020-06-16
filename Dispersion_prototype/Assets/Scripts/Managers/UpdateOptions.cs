@@ -7,6 +7,7 @@ public class UpdateOptions : MonoBehaviour
 {
     OptionsManager optionsManager;
     public Toggle cameraRelativeMovement;
+
     void Start()
     {
         cameraRelativeMovement = transform.Find("LevelRelativeToggle").GetComponent<Toggle>();
