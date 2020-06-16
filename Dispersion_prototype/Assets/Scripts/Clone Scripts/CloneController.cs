@@ -36,6 +36,9 @@ public class CloneController : MonoBehaviour
     GameObject spherePlayerPosition;
     GameObject sphereCloneGoalPosition;
     Vector3 cloneGoalPosition; //Where the clone shoul be when it's stuck
+
+    public bool cloneIsBlocked;
+
     bool connectionBreak;
     bool connectionFlag;
 
@@ -107,12 +110,12 @@ public class CloneController : MonoBehaviour
         }
 
 
-        // STOP PLAYER BY CLONE
-        if (movement.magnitude == 0 && (h != 0 || v != 0))
-            playerController.stoppedByClone = true;
-        else
-            playerController.stoppedByClone = false;
-        //
+        //// STOP PLAYER BY CLONE
+        //if (cloneIsBlocked)
+        //    playerController.stoppedByClone = true;
+        //else
+        //    playerController.stoppedByClone = false;
+        ////
     }
     private void Update()
     {
@@ -157,19 +160,19 @@ public class CloneController : MonoBehaviour
         
         // Set the movement vector based on the axis input.
         movement = (h * moveright + v * moveforvard);
+        Debug.DrawRay(transform.position, movement.normalized * 6, Color.green);
+        WallHurt();
         // Normalise the movement vector and make it proportional to the speed per second.
         movement = movement.normalized * speed * Time.deltaTime;
-
         movement = movement.normalized * playerController.movement.magnitude;
 
-        Debug.DrawRay(transform.position, new Vector3(h,0,v) * 5, Color.green);
+        Debug.DrawRay(transform.position, movement.normalized * 5, Color.green);
         Debug.DrawRay(transform.position, moveforvard * 5, Color.blue);
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
         // Move the player to it's current position plus the movement.
-
         
-
-        WallHurt();
+        
+        
 
         if (connectionBreak)
         {
@@ -200,8 +203,10 @@ public class CloneController : MonoBehaviour
                 if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
                 hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger")
                 {
-                    cloneHealth.DecreaseHP();
+                    cloneIsBlocked = true;
+                    //cloneHealth.DecreaseHP();
                     movement = Vector3.zero;
+                    
                     //connectionBreak = true;
                     //if (connectionBreak != connectionFlag) // Not sure about this "return feature"
                     //{
@@ -220,13 +225,16 @@ public class CloneController : MonoBehaviour
                     //}
 
                 }
+                else cloneIsBlocked = false;
 
                 if (hit.transform.tag == "Death")
                     cloneHealth.CloneDeath();
 
             }
         }
-        
+        else cloneIsBlocked = false;
+
+
     }
 
     void GetMovmentDir() // relative movement

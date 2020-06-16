@@ -101,10 +101,12 @@ public class PlayerController : MonoBehaviour
             usingGun = false;
         }
 
-        if (GameManager.Instance.clones.Count == 0)
+        if (GameManager.Instance.clones.Count > 0)
         {
-            stoppedByClone = false;
+            AreClonesBlocked();
         }
+        else
+          stoppedByClone = false; 
     }
 
     void Move(float h, float v)
@@ -248,5 +250,20 @@ public class PlayerController : MonoBehaviour
     {
         speed = 0;
         turningObject.GetComponent<PlayerTurning>().turningspeed = 0;
+    }
+
+    void AreClonesBlocked()
+    {
+        foreach (GameObject clone in GameManager.Instance.clones)
+        {
+            if (clone.GetComponent<CloneController>().cloneIsBlocked)
+            {
+                stoppedByClone = true;
+            }
+            else
+            {
+                stoppedByClone = false;
+            }
+        }
     }
 }
