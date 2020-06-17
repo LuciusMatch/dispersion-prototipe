@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Lazar.unity
     guid: f1fde4f9e4b5ba3439827eb5cc0610fb
   - enabled: 1
+    path: Assets/Scenes/Loading Screen.unity
+    guid: 73de37322ac98884fb8162975f905411
+  - enabled: 1
     path: Assets/Scenes/Prototype 2.unity
     guid: bd054a6f228861c448e34a39f4967acb
   m_configObjects: {}
