@@ -43,11 +43,6 @@ public class Interaction : MonoBehaviour
                             Debug.Log("Keycard not collected yet");
                         }
                     }
-                    else if (eventType == EventType.PickUp)
-                    {
-                        action.Invoke();
-                        Destroy(gameObject);
-                    }
                 }
                 else if (eventType == EventType.PressurePlateRepeated)
                 {
@@ -61,7 +56,8 @@ public class Interaction : MonoBehaviour
     {
         others.Add(other);
 
-        if (eventType == EventType.PressurePlateOnOff && (other.tag == "Player" || other.tag == "Clone"))
+        if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.PickUp)
+            && (other.tag == "Player" || other.tag == "Clone"))
         {
             action.Invoke();
         }

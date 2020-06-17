@@ -7,7 +7,7 @@ public class KeycardInventory : MonoBehaviour
     public List<GameObject> indicators = new List<GameObject>();
 
     [HideInInspector]
-    public List<int> keycards { get; private set; } = new List<int>();
+    public List<Keycard> keycards { get; private set; } = new List<Keycard>();
 
     private void Start()
     {
@@ -20,17 +20,17 @@ public class KeycardInventory : MonoBehaviour
 
     public bool HasKeycard(int id)
     {
-        return keycards.Contains(id);
+        return keycards.Find(card => card.keycardId == id) != null;
     }
 
-    public void AddKeycard(int id)
+    public void AddKeycard(Keycard card)
     {
-        keycards.Add(id);
-        indicators[id].SetActive(true);
-        Debug.Log("Keycard " + id + " collected");
+        keycards.Add(card);
+        indicators[card.keycardId].SetActive(true);
+        Debug.Log("Keycard " + card.keycardId + " collected");
     }
 
-    public void SetKeycards(List<int> keycards)
+    public void SetKeycards(List<Keycard> keycards)
     {
         this.keycards = keycards;
         UpdateIndicators();
@@ -38,9 +38,9 @@ public class KeycardInventory : MonoBehaviour
 
     public void UpdateIndicators()
     {
-        foreach (int keycard in keycards)
+        foreach (Keycard card in keycards)
         {
-            indicators[keycard].SetActive(true);
+            indicators[card.keycardId].SetActive(true);
         }
     }
 }

@@ -49,6 +49,20 @@ public class CloneHealth : MonoBehaviour
     {
         cloningController.platformactivated = false;
         GameManager.Instance.clones.Remove(this.gameObject);
+
+        KeycardInventory inventory = GetComponent<KeycardInventory>();
+        if (inventory != null)
+        {
+            KeycardInventory playerInventory = GameManager.Instance.player.GetComponent<KeycardInventory>();
+            foreach (Keycard card in inventory.keycards)
+            {
+                if (!playerInventory.HasKeycard(card.keycardId))
+                {
+                    card.Reset();
+                }
+            }
+        }
+
         Destroy(this.gameObject);
     }
 

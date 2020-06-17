@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -171,7 +171,7 @@ public class CloneController : MonoBehaviour
         Debug.DrawRay(transform.position, moveright * 5, Color.red);
         // Move the player to it's current position plus the movement.
         
-        
+        //movement = playerController.movement;
         
 
         if (connectionBreak)
