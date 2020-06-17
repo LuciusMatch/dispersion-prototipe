@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     {
         gameInProgress = PlayerPrefs.HasKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
         continueButton.interactable = gameInProgress;
-        levelSelectorButton.interactable = gameInProgress;
+        levelSelectorButton.interactable = PlayerPrefs.HasKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
 
         for (int i = 0; i < numberOfLevels; i++)
         {

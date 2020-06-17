@@ -13,7 +13,7 @@ public class MoveThroughSpace : MonoBehaviour
     {
         transform.Translate(-Vector3.forward * Time.deltaTime * speed);
 
-        if (transform.position.z <= -4317 && transform.position.z >= -4371)
+        if (transform.position.z <= -5200)
         {
             Debug.Log("END!");
 
