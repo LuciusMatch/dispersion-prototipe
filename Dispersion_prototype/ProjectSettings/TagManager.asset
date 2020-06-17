@@ -17,6 +17,7 @@ TagManager:
   - EnemyTrigger
   - Not a wall
   - Simple Gravitation
+  - Stairs
   layers:
   - Default
   - TransparentFX

@@ -2,34 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+class Anim
+{
+    public Animation anim;
+    public string clipName;
+    public string reverseName;
+}
+
 public class AnimationHandler : MonoBehaviour
 {
-    private Animation anim;
-    private string clipName;
-    private string reverseName;
-    private bool crRunning = false;
+    private List<Anim> anims = new List<Anim>();
+    public bool crRunning = false;
     public bool isReversed = false;
 
     private void Awake()
     {
-        anim = GetComponentInChildren<Animation>();
-        clipName = anim.clip.name;
-        reverseName = clipName + "_reverse";
+        foreach (Animation a in GetComponentsInChildren<Animation>())
+        {
+            Anim newAnim = new Anim();
+            newAnim.anim = a;
+            newAnim.clipName = a.clip.name;
+            newAnim.reverseName = newAnim.clipName + "_reverse";
+            anims.Add(newAnim);
+        }
+    }
+
+    public bool IsPlaying()
+    {
+        foreach (Anim a in anims)
+        {
+            if (a.anim.isPlaying)
+                return true;
+        }
+        return false;
     }
 
     public void Play()
     {
-        anim.Play();
+        foreach (Anim a in anims)
+        {
+            a.anim.Play();
+        }
     }
 
     public void PlayReverse()
     {
-        anim.Play(reverseName);
+        foreach (Anim a in anims)
+        {
+            a.anim.Play(a.reverseName);
+        }
     }
 
     public void PlayToggle()
     {
-        if (!anim.isPlaying)
+        if (!IsPlaying())
         {
             if (isReversed)
             {
@@ -57,7 +83,7 @@ public class AnimationHandler : MonoBehaviour
         crRunning = true;
 
         Play();
-        while (anim.isPlaying)
+        while (IsPlaying())
         {
             yield return null;
         }
@@ -65,7 +91,7 @@ public class AnimationHandler : MonoBehaviour
         yield return new WaitForSeconds(seconds);
 
         PlayReverse();
-        while (anim.isPlaying)
+        while (IsPlaying())
         {
             yield return null;
         }
