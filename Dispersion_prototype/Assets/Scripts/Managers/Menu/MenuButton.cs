@@ -8,7 +8,6 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     [TextArea] public string text;
 
-#if UNITY_EDITOR
     private void Update()
     {
         foreach (Text textElem in GetComponentsInChildren<Text>())
@@ -16,7 +15,6 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             textElem.text = text;
         }
     }
-#endif
 
     public void OnPointerEnter(PointerEventData eventData)
     {
