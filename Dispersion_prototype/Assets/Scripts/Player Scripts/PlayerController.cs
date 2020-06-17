@@ -116,10 +116,10 @@ public class PlayerController : MonoBehaviour
         // Normalise the movement vector and make it proportional to the speed per second.
 
         RaycastHit hit;
-        Physics.SphereCast(transform.position, .25f, Vector3.down, out hit, 3f);
+        Physics.SphereCast(transform.position, .25f, Vector3.down, out hit, 3f, LayerMask.GetMask("Floor"));
         float slope = Vector3.Dot(turningObject.transform.right, (Vector3.Cross(Vector3.up, hit.normal)));
         slope = (slope < 0) ? slope * 0.25f : slope * 0.6f;
-
+        //Debug.Log(slope);
         movement = movement.normalized * speed * (1 - slope) * Time.deltaTime;
 
 
@@ -168,6 +168,16 @@ public class PlayerController : MonoBehaviour
                 if (hit.transform.tag == "Simple Gravitation")
                 {
                     //floating = true;
+                    Vector3 gravi = hit.transform.forward;
+                    //Debug.Log(gravi + "; " + movement);
+                    if (gravi.x != 0)
+                    {
+                        movement.z = (movement.x * gravi.x >= 0) ? 0 : movement.z;
+                    }
+                    else
+                    {
+                        movement.x = (movement.z * gravi.z >= 0) ? 0 : movement.x;
+                    }
                 }
 
                 if (hit.transform.tag == "Death")
