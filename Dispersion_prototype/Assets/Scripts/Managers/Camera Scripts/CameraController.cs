@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private bool movecam;
 
-    void Start()
+    void Awake()
     {
         cam = GetComponent<Camera>();
         movecam = false;

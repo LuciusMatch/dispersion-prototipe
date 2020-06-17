@@ -24,5 +24,7 @@ public class CameraLoadAfterCkeckPoint : MonoBehaviour
 
         if (lastCheckPoint.isortographic)
             cam.orthographicSize = lastCheckPoint.camerasize;
+
+        cam.GetComponent<CameraController>().SetCameraFollowPlayer(true);
     }
 }
