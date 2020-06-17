@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
                 if (hit.transform.tag == "Simple Gravitation")
                 {
-                    floating = true;
+                    //floating = true;
                 }
 
                 if (hit.transform.tag == "Death")
