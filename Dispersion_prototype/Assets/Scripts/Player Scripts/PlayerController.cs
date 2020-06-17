@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         turningObject = transform.Find("PlayerTurning").gameObject;
 
 
-        customgravity.force = -transform.up * 20;       //applying g in a direction of a -normal of a floor
+        customgravity.force = -transform.up * 50;       //applying g in a direction of a -normal of a floor
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
     }
@@ -115,7 +115,12 @@ public class PlayerController : MonoBehaviour
         movement = (h * moveright + v * moveforvard);
         // Normalise the movement vector and make it proportional to the speed per second.
 
-        movement = movement.normalized * speed * Time.deltaTime;
+        RaycastHit hit;
+        Physics.SphereCast(transform.position, .25f, Vector3.down, out hit, 3f);
+        float slope = Vector3.Dot(turningObject.transform.right, (Vector3.Cross(Vector3.up, hit.normal)));
+        slope = (slope < 0) ? slope * 0.25f : slope * 0.6f;
+
+        movement = movement.normalized * speed * (1 - slope) * Time.deltaTime;
 
 
         Debug.DrawRay(transform.position, moveforvard * 5, Color.blue);
@@ -146,14 +151,16 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, movement.normalized, out hit, 1.2f))
+        Vector3 rayStartPoint = transform.position + 0.5f * Vector3.down;
+        if (Physics.Raycast(rayStartPoint, movement.normalized, out hit, 1f))
         {
             if (!hit.transform.GetComponent<Collider>().isTrigger)
             {
                 if (hit.transform.tag != "CheckPoint" && hit.transform.tag != "Death" && hit.transform.tag != "Camera Switch" &&
-                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" && hit.transform.tag != "Simple Gravitation")
+                    hit.transform.tag != "Gravitation" && hit.transform.tag != "Interactable" && hit.transform.tag != "EnemyTrigger" &&
+                    hit.transform.tag != "Simple Gravitation" && hit.transform.tag != "Stairs")
                 {
-                    Debug.DrawRay(transform.position, movement.normalized * 1.2f, Color.green);
+                    Debug.DrawRay(rayStartPoint, movement.normalized * 1.2f, Color.green);
                     //Debug.Log("Stopped by " + hit.transform.name);
                     movement = Vector3.zero;
                 }

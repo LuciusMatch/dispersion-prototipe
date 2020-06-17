@@ -469,7 +469,7 @@ ConstantForce:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804362149599194345}
   m_Enabled: 1
-  m_Force: {x: 0, y: -10, z: 0}
+  m_Force: {x: 0, y: -50, z: 0}
   m_RelativeForce: {x: 0, y: 0, z: 0}
   m_Torque: {x: 0, y: 0, z: 0}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
@@ -488,6 +488,7 @@ MonoBehaviour:
   checkPointManager: {fileID: 0}
   speed: 6
   movement: {x: 0, y: 0, z: 0}
+  stoppedByClone: 0
   moveforvard: {x: 0, y: 0, z: 0}
   moveright: {x: 0, y: 0, z: 0}
   movementRelativeToCam: 0
@@ -510,6 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6e098e7fa769134b957150f0abef995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHealth: 100
   healthdecreaseSpeed: 20
   healthBar: {fileID: 0}
   animator: {fileID: 0}
@@ -545,7 +547,6 @@ MonoBehaviour:
   - {fileID: 836700031528121863}
   - {fileID: 1697636062683929888}
   - {fileID: 8473133116244715452}
-  keycards: 000000000100000001000000010000000100000001000000010000000100000001000000
 --- !u!1 &836700031528121863
 GameObject:
   m_ObjectHideFlags: 0

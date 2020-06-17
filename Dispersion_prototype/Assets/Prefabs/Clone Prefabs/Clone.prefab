@@ -554,6 +554,7 @@ MonoBehaviour:
   reversemovement: 0
   mirrormovementX: 0
   mirrormovementZ: 0
+  cloneIsBlocked: 0
   animator: {fileID: 0}
 --- !u!114 &6618675363751653539
 MonoBehaviour:
