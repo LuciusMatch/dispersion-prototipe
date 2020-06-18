@@ -23,20 +23,25 @@ public class Keycard : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(others);
         others.Remove(other);
-        Debug.Log(others);
     }
 
     public void PickUp()
     {
         pickedUp = true;
+        GameManager.audioPlayer.KeycardPickedUp();
     }
 
     private void PickingUp()
     {
         others.RemoveAll(item => item == null);
-        gameObject.SetActive(false);
+
+        // Disable children, disabling the whole game object would disable the audio too
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+
         foreach (Collider other in others)
         {
             KeycardInventory inventory = other.GetComponent<KeycardInventory>();
@@ -49,7 +54,10 @@ public class Keycard : MonoBehaviour
 
     public void Reset()
     {
-        gameObject.SetActive(true);
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(true);
+        }
         pickedUp = false;
     }
 }

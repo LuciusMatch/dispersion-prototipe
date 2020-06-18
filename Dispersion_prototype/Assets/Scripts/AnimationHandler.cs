@@ -1,3 +1,4 @@
+using MyBox;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,18 +10,18 @@ class Anim
     public string reverseName;
 }
 
+public enum objectType { Button, Door };
+
 public class AnimationHandler : MonoBehaviour
 {
     private List<Anim> anims = new List<Anim>();
     public bool crRunning = false;
     public bool isReversed = false;
-
-    private AudioSource source;
+    public bool hasSound = false;
+    [ConditionalField(nameof(hasSound))] public objectType objType;
 
     private void Awake()
     {
-        source = GetComponent<AudioSource>();
-
         foreach (Animation a in GetComponentsInChildren<Animation>())
         {
             Anim newAnim = new Anim();
@@ -50,11 +51,7 @@ public class AnimationHandler : MonoBehaviour
             {
                 a.anim.Play();
             }
-
-            if (source != null)
-            {
-                source.Play();
-            }
+            PlaySound();
         }
     }
 
@@ -66,11 +63,7 @@ public class AnimationHandler : MonoBehaviour
             {
                 a.anim.Play(a.reverseName);
             }
-
-            if (source != null)
-            {
-                source.Play();
-            }
+            PlaySound();
         }
     }
 
@@ -122,5 +115,21 @@ public class AnimationHandler : MonoBehaviour
 
         warning.TurnOff();
         crRunning = false;
+    }
+
+    private void PlaySound()
+    {
+        if (hasSound)
+        {
+            switch (objType)
+            {
+                case objectType.Button:
+                    GameManager.audioPlayer.ButtonPress();
+                    break;
+                case objectType.Door:
+                    GameManager.audioPlayer.DoorSlide();
+                    break;
+            }
+        }
     }
 }

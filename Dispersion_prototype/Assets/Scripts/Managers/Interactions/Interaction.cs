@@ -41,6 +41,7 @@ public class Interaction : MonoBehaviour
                         else
                         {
                             Debug.Log("Keycard not collected yet");
+                            GameManager.audioPlayer.AccessDenied();
                         }
                     }
                 }

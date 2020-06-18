@@ -53,10 +53,12 @@ public class MoveAndRotate : MonoBehaviour
     public void TranslateObject()
     {
         translateObject = true;
+        GameManager.audioPlayer.MovingWalls();
     }
 
     public void RotateObject()
     {
         rotateObject = true;
+        GameManager.audioPlayer.MovingWalls();
     }
 }
