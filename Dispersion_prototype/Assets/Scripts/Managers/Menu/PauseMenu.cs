@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.pause = false;
         GameMenu.isPaused = false;
     }
 
@@ -25,19 +26,18 @@ public class PauseMenu : MonoBehaviour
     {
         gameObject.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.pause = true;
         EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
-        Time.timeScale = 1f;
-        Destroy(CheckPointManager.instance.gameObject);
+        Destroy(DontDestroy.obj);
         SceneManager.LoadScene(0);
     }
 

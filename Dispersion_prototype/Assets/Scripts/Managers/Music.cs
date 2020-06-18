@@ -11,6 +11,7 @@ public class Music : MonoBehaviour
     private void Awake()
     {
         source = gameObject.AddComponent<AudioSource>();
+        source.ignoreListenerPause = true;
     }
 
     private void Update()
