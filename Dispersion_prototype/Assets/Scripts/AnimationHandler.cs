@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -109,6 +109,9 @@ public class AnimationHandler : MonoBehaviour
             yield return null;
         }
 
+        TimedDoorWarning warning = GameManager.Instance.GetComponent<TimedDoorWarning>();
+        warning.TurnOn();
+
         yield return new WaitForSeconds(seconds);
 
         PlayReverse();
@@ -117,6 +120,7 @@ public class AnimationHandler : MonoBehaviour
             yield return null;
         }
 
+        warning.TurnOff();
         crRunning = false;
     }
 }

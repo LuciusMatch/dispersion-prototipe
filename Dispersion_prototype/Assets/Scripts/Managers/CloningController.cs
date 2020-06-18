@@ -46,6 +46,8 @@ public class CloningController : MonoBehaviour
     {
         if (other.tag == "Player" && platformactivated == false)
         {
+            GetComponent<AudioSource>().Play();
+
             movingToCenter = true;
             other.transform.parent = transform.parent;
             
