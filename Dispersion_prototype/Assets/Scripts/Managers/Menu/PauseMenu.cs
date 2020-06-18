@@ -37,7 +37,7 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1f;
-        Destroy(CheckPointManager.instance);
+        Destroy(CheckPointManager.instance.gameObject);
         SceneManager.LoadScene(0);
     }
 
