@@ -15,8 +15,12 @@ public class AnimationHandler : MonoBehaviour
     public bool crRunning = false;
     public bool isReversed = false;
 
+    private AudioSource source;
+
     private void Awake()
     {
+        source = GetComponent<AudioSource>();
+
         foreach (Animation a in GetComponentsInChildren<Animation>())
         {
             Anim newAnim = new Anim();
@@ -34,22 +38,39 @@ public class AnimationHandler : MonoBehaviour
             if (a.anim.isPlaying)
                 return true;
         }
+
         return false;
     }
 
     public void Play()
     {
-        foreach (Anim a in anims)
+        if (!IsPlaying())
         {
-            a.anim.Play();
+            foreach (Anim a in anims)
+            {
+                a.anim.Play();
+            }
+
+            if (source != null)
+            {
+                source.Play();
+            }
         }
     }
 
     public void PlayReverse()
     {
-        foreach (Anim a in anims)
+        if (!IsPlaying())
         {
-            a.anim.Play(a.reverseName);
+            foreach (Anim a in anims)
+            {
+                a.anim.Play(a.reverseName);
+            }
+
+            if (source != null)
+            {
+                source.Play();
+            }
         }
     }
 
