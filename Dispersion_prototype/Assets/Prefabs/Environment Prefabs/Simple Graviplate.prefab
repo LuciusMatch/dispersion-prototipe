@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventType: 0
+  icon: 3
   keycardRequired: 0
   keycardID: 0
   action:

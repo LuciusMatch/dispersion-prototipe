@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventType: 0
+  icon: 1
   keycardRequired: 0
   keycardID: 0
   action:
@@ -95,6 +96,7 @@ MonoBehaviour:
   crRunning: 0
   isReversed: 0
   hasSound: 1
+  objType: 0
 --- !u!1 &659558353387403352
 GameObject:
   m_ObjectHideFlags: 0

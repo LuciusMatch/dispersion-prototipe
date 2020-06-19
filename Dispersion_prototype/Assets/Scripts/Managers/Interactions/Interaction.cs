@@ -8,6 +8,7 @@ public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, 
 public class Interaction : MonoBehaviour
 {
     public EventType eventType;
+    public IconTypes icon;
     [ConditionalField(nameof(eventType), false, EventType.Use, EventType.UseOnce)] public bool keycardRequired = false;
     [ConditionalField(nameof(keycardRequired))] public int keycardID;
     public UnityEvent action;
@@ -57,6 +58,7 @@ public class Interaction : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         others.Add(other);
+        GameManager.indicator.TurnOn(icon);
 
         if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.Trigger
             || (eventType == EventType.TriggerOnce && !alreadyUsed))
@@ -70,6 +72,7 @@ public class Interaction : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         others.Remove(other);
+        GameManager.indicator.TurnOff();
 
         if (eventType == EventType.PressurePlateOnOff && (other.tag == "Player" || other.tag == "Clone"))
         {

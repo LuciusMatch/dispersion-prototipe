@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
     public static AudioPlayer audioPlayer;
+    public static DisplayIndicator indicator;
 
     void Awake()
     {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             audioPlayer = GetComponent<AudioPlayer>();
+            indicator = GetComponent<DisplayIndicator>();
         }
         else
         {
