@@ -79,6 +79,7 @@ public class DisplaySpeech : MonoBehaviour
 
     public void Close()
     {
+        displaying = false;
         fadingIn = false;
         t = 0;
     }
