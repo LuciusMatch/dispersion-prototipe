@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EventType { Use, UseOnce, PickUp, PressurePlateOnOff, PressurePlateRepeated }
+public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, PressurePlateRepeated }
 public class Interaction : MonoBehaviour
 {
     public EventType eventType;
@@ -31,7 +31,8 @@ public class Interaction : MonoBehaviour
             {
                 if (Input.GetButtonDown("Use"))
                 {
-                    if (eventType == EventType.Use || (eventType == EventType.UseOnce && !alreadyUsed))
+                    if (eventType == EventType.Use
+                        || (eventType == EventType.UseOnce && !alreadyUsed))
                     {
                         if (!keycardRequired || other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
                         {
@@ -57,9 +58,11 @@ public class Interaction : MonoBehaviour
     {
         others.Add(other);
 
-        if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.PickUp)
+        if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.Trigger
+            || (eventType == EventType.TriggerOnce && !alreadyUsed))
             && (other.tag == "Player" || other.tag == "Clone"))
         {
+            alreadyUsed = true;
             action.Invoke();
         }
     }
