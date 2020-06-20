@@ -47,6 +47,11 @@ public class Interaction : MonoBehaviour
                         }
                     }
                 }
+                else if (Input.GetButtonDown("Cancel") && eventType == EventType.StoryNote && alreadyUsed)
+                {
+                    actionOff.Invoke();
+                    alreadyUsed = false;
+                }
                 else if (eventType == EventType.PressurePlateRepeated)
                 {
                     action.Invoke();
