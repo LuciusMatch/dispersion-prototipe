@@ -37,7 +37,7 @@ public class MainMenu : MonoBehaviour
             int checkPointId = i; // this is needed because else all the buttons will be set to the last checkpoint
             btn.onClick.AddListener(() => StartFromCheckpoint(checkPointId));
 
-            if (i == numberOfLevels - 1)
+            if (i == PlayerPrefs.GetInt(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY, 0))
             {
                 Navigation navig = new Navigation();
                 navig.mode = Navigation.Mode.Explicit;

@@ -51,10 +51,19 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator DeathCoroutine()
     {
+        AsyncOperation asyncOper = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        asyncOper.allowSceneActivation = false;
         animator.SetBool("Death", true); //DEATH ANIMATION
         playerController.DeathFreeze();
+        GameManager.audioPlayer.ElectricShock();
 
-        yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        yield return new WaitForSeconds(1);
+
+        while (asyncOper.progress < .9f)
+        {
+            yield return null;
+        }
+
+        asyncOper.allowSceneActivation = true;
     }
 }

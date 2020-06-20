@@ -11,6 +11,7 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] private AudioClip accessDenied;
     [SerializeField] private AudioClip cloning;
     [SerializeField] private AudioClip movingWalls;
+    [SerializeField] private AudioClip zap;
 
     private AudioSource source;
 
@@ -47,5 +48,10 @@ public class AudioPlayer : MonoBehaviour
     public void MovingWalls()
     {
         source.PlayOneShot(movingWalls);
+    }
+
+    public void ElectricShock()
+    {
+        source.PlayOneShot(zap);
     }
 }
