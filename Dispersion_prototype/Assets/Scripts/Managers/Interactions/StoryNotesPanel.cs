@@ -25,5 +25,15 @@ public class StoryNotesPanel : MonoBehaviour
         text.text = note.text;
 
         anim.PlayToggle();
+        open = !open;
+    }
+
+    public void CloseNote()
+    {
+        if (open)
+        {
+            anim.PlayReverse();
+            open = false;
+        }
     }
 }

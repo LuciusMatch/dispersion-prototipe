@@ -45,26 +45,28 @@ public class AnimationHandler : MonoBehaviour
 
     public void Play()
     {
-        if (!IsPlaying())
-        {
+        //if (!IsPlaying())
+        //{
             foreach (Anim a in anims)
             {
                 a.anim.Play();
             }
             PlaySound();
-        }
+            isReversed = true;
+        //}
     }
 
     public void PlayReverse()
     {
-        if (!IsPlaying())
-        {
+        //if (!IsPlaying())
+        //{
             foreach (Anim a in anims)
             {
                 a.anim.Play(a.reverseName);
             }
             PlaySound();
-        }
+            isReversed = false;
+        //}
     }
 
     public void PlayToggle()

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, PressurePlateRepeated }
+public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, PressurePlateRepeated, StoryNote }
 public class Interaction : MonoBehaviour
 {
     public EventType eventType;
@@ -12,7 +12,7 @@ public class Interaction : MonoBehaviour
     [ConditionalField(nameof(eventType), false, EventType.Use, EventType.UseOnce)] public bool keycardRequired = false;
     [ConditionalField(nameof(keycardRequired))] public int keycardID;
     public UnityEvent action;
-    [ConditionalField(nameof(eventType), false, EventType.PressurePlateOnOff)] public UnityEvent actionOff;
+    [ConditionalField(nameof(eventType), false, EventType.PressurePlateOnOff, EventType.StoryNote)] public UnityEvent actionOff;
 
     private bool alreadyUsed = false;
     private List<Collider> others = new List<Collider>();
@@ -32,7 +32,7 @@ public class Interaction : MonoBehaviour
             {
                 if (Input.GetButtonDown("Use"))
                 {
-                    if (eventType == EventType.Use
+                    if (eventType == EventType.Use || eventType == EventType.StoryNote
                         || (eventType == EventType.UseOnce && !alreadyUsed))
                     {
                         if (!keycardRequired || other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
@@ -74,7 +74,8 @@ public class Interaction : MonoBehaviour
         others.Remove(other);
         GameManager.indicator.TurnOff();
 
-        if (eventType == EventType.PressurePlateOnOff && (other.tag == "Player" || other.tag == "Clone"))
+        if ((other.tag == "Player" || other.tag == "Clone")
+            && eventType == EventType.PressurePlateOnOff || (eventType == EventType.StoryNote && alreadyUsed))
         {
             actionOff.Invoke();
         }
