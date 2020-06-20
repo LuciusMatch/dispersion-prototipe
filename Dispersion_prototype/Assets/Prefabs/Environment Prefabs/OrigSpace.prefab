@@ -1792,6 +1792,8 @@ MonoBehaviour:
   cloneOriginTransform: {fileID: 0}
   clonegameobject: {fileID: 708365596209402261, guid: c5ae3d73b75f7724cb46e46f7887e5b6,
     type: 3}
+  cloneEffect: {fileID: 5712903447279504838, guid: 8d99ae0013b8e8f4a82b1bf74135fbdb,
+    type: 3}
   reversemovement: 0
   mirrorx: 0
   mirrorz: 0

@@ -9,6 +9,8 @@ public class CloningController : MonoBehaviour
     
     [SerializeField]
     GameObject clonegameobject;
+    [SerializeField]
+    GameObject cloneEffect;
 
     [SerializeField]
     bool reversemovement = false;
@@ -57,7 +59,8 @@ public class CloningController : MonoBehaviour
             //Debug.DrawLine(cloneOriginTransform.position, cloneposition, Color.black, 15);
 
             GameObject newclone = Instantiate(clonegameobject, cloneposition, cloneOriginTransform.rotation, cloneOriginTransform.parent);
-
+            Instantiate(cloneEffect, cloneposition, cloneOriginTransform.rotation, cloneOriginTransform.parent); //Effect
+        
             GameManager.Instance.clones.Add(newclone);//add a clone to list in manager
 
             newclone.GetComponent<CloneHealth>().cloningController = this.GetComponent<CloningController>();
