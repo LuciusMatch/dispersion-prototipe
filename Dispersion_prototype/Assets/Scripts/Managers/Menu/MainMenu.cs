@@ -93,6 +93,7 @@ public class MainMenu : MonoBehaviour
     {
         gameObject.SetActive(false);
         levelSelectorUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(levelSelectorContent.GetComponentInChildren<Button>().gameObject);
     }
 

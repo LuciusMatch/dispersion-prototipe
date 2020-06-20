@@ -7,12 +7,28 @@ using UnityEngine.Events;
 public class GoBack : MonoBehaviour
 {
     public UnityEvent e;
+    private PlayerControls input;
+
+    private void Awake()
+    {
+        input = new PlayerControls();
+    }
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (input.UI.Cancel.triggered)
         {
             e.Invoke();
         }
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }

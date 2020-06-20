@@ -27,11 +27,11 @@ public class Inventory_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Inventory"))
+        /*if (Input.GetButtonDown("Inventory"))
         {
             SwitchInventoryUI();
             StickToCharacter();
-        }
+        }*/
     }
 
     void UpdateUI(Inventory inventory)

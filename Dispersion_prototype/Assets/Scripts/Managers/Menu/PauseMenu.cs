@@ -27,6 +27,7 @@ public class PauseMenu : MonoBehaviour
         gameObject.SetActive(true);
         Time.timeScale = 0f;
         AudioListener.pause = true;
+        EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(pauseFirstButton);
     }
 

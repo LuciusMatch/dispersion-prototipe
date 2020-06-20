@@ -46,6 +46,15 @@ public class CloneController : MonoBehaviour
 
     public Animator animator;
 
+    private PlayerControls input;
+    private Vector2 moveInput;
+
+    private void Awake()
+    {
+        input = new PlayerControls();
+        input.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+    }
+
     void Start()
     {
         cloneHealth = GetComponent<CloneHealth>();
@@ -83,8 +92,8 @@ public class CloneController : MonoBehaviour
         }
 
 
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float h = moveInput.x;
+        float v = moveInput.y;
 
         if (playerController.hasGun) animator.SetBool("HasGun", true);
         else animator.SetBool("HasGun", false);
@@ -122,14 +131,14 @@ public class CloneController : MonoBehaviour
         GetMovmentDir(); // DUMB!
         cloneIndicator.enabled = true; //Really bad!
 
-        if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
+        /*if ((playerController.hasGun) && Input.GetMouseButtonDown(0))
 
         {
             transform.GetChild(0).Find("Gun").gameObject.SetActive(true);
             transform.GetChild(0).Find("Gun").GetComponent<Renderer>().material.SetColor("_BaseColor", playerController.gunColor);
         }
         if ((playerController.hasGun) && Input.GetMouseButtonUp(0))
-            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);
+            transform.GetChild(0).Find("Gun").gameObject.SetActive(false);*/
 
         //if (Input.GetKeyDown(KeyCode.Space) && holdposition == false)
         //{
@@ -137,14 +146,16 @@ public class CloneController : MonoBehaviour
         //    cloneRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         //}
 
-        if (Input.GetKey(KeyCode.Mouse1))
+        holdposition = input.Gameplay.FreezeClone.triggered;
+        
+        /*if(Input.GetKey(KeyCode.Mouse1))
         {
             holdposition = true;
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             holdposition = false;
-        }
+        }*/
 
         if (holdposition)
         {
@@ -324,6 +335,16 @@ public class CloneController : MonoBehaviour
            
             connectionBreak = false;
         }
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }
 

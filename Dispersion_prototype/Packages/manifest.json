@@ -2,6 +2,7 @@
   "dependencies": {
     "com.mybox": "https://github.com/Deadcows/MyBox.git",
     "com.unity.2d.sprite": "1.0.0",
+    "com.unity.inputsystem": "1.0.0",
     "com.unity.probuilder": "4.2.3",
     "com.unity.progrids": "3.0.3-preview.4",
     "com.unity.render-pipelines.core": "7.1.8",

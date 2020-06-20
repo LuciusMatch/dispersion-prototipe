@@ -8,6 +8,13 @@ public class GameMenu : MonoBehaviour
     public PauseMenu pauseMenu;
     public static bool isPaused;
 
+    private PlayerControls input;
+
+    private void Awake()
+    {
+        input = new PlayerControls();
+    }
+
     private void Start()
     {
         isPaused = false;
@@ -15,17 +22,27 @@ public class GameMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (input.Gameplay.Pause.triggered)
         {
             if (!isPaused)
             {
                 pauseMenu.Pause();
                 isPaused = true;
             }
-            else
+            else if (pauseMenu.gameObject.activeSelf)
             {
                 pauseMenu.Resume();
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }

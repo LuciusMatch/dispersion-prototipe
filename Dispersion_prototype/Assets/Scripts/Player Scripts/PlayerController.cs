@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Runtime.InteropServices.ComTypes;
 
 public class PlayerController : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class PlayerController : MonoBehaviour
 
     public Animator animator;
     private GameObject turningObject;
+
+    private PlayerControls input;
+    private Vector2 moveInput;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,10 +53,12 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         turningObject = transform.Find("PlayerTurning").gameObject;
 
-
         customgravity.force = -transform.up * 50;       //applying g in a direction of a -normal of a floor
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
+
+        input = new PlayerControls();
+        input.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
     }
 
     private void Start()
@@ -69,8 +76,8 @@ public class PlayerController : MonoBehaviour
     {
 
         // Store the input axes.
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float h = moveInput.x;
+        float v = moveInput.y;
 
         if (hasGun) animator.SetBool("HasGun", true);
         else animator.SetBool("HasGun", false);
@@ -282,5 +289,15 @@ public class PlayerController : MonoBehaviour
                 stoppedByClone = false;
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }

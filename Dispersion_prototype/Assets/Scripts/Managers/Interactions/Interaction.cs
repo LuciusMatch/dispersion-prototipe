@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem.Users;
 
 public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, PressurePlateRepeated, StoryNote }
 public class Interaction : MonoBehaviour
@@ -17,10 +18,14 @@ public class Interaction : MonoBehaviour
     private bool alreadyUsed = false;
     private List<Collider> others = new List<Collider>();
 
+    private PlayerControls input;
+
     void Awake()
     {
         if (action == null)
             action = new UnityEvent();
+
+        input = new PlayerControls();
     }
 
     private void Update()
@@ -30,7 +35,7 @@ public class Interaction : MonoBehaviour
         {
             if (other.tag == "Player" || other.tag == "Clone")
             {
-                if (Input.GetButtonDown("Use"))
+                if (input.Gameplay.Use.triggered)
                 {
                     if (eventType == EventType.Use || eventType == EventType.StoryNote
                         || (eventType == EventType.UseOnce && !alreadyUsed))
@@ -47,7 +52,7 @@ public class Interaction : MonoBehaviour
                         }
                     }
                 }
-                else if (Input.GetButtonDown("Cancel") && eventType == EventType.StoryNote && alreadyUsed)
+                else if (input.UI.Cancel.triggered && eventType == EventType.StoryNote && alreadyUsed)
                 {
                     actionOff.Invoke();
                     alreadyUsed = false;
@@ -84,5 +89,15 @@ public class Interaction : MonoBehaviour
         {
             actionOff.Invoke();
         }
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }

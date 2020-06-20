@@ -18,11 +18,15 @@ public class DisplaySpeech : MonoBehaviour
     private bool fadingIn = false;
     private float t = 100;
 
+    private PlayerControls input;
+
     private void Awake()
     {
         image = GetComponent<Image>();
         image.SetAlpha(0);
         text.SetAlpha(0);
+
+        input = new PlayerControls();
     }
 
     private void Update()
@@ -39,7 +43,7 @@ public class DisplaySpeech : MonoBehaviour
 
         t += 4 * Time.deltaTime;
 
-        if (Input.GetButtonDown("Submit") && displaying)
+        if (input.UI.Submit.triggered && displaying)
         {
             if (!typing)
             {
@@ -99,5 +103,15 @@ public class DisplaySpeech : MonoBehaviour
         }
         typing = false;
         skip = false;
+    }
+
+    private void OnEnable()
+    {
+        input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
     }
 }
