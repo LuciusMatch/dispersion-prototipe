@@ -22,11 +22,13 @@ public class CheckPointManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(instance);
 
+#if UNITY_EDITOR
             if (lastCheckPointOverride >= 0)
             {
                 lastCheckPoint = lastCheckPointOverride;
                 lastCheckPointOverride = -1;
             }
+#endif
         }
         else
         {

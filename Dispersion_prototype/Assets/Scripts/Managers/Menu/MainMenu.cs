@@ -12,18 +12,21 @@ public class MainMenu : MonoBehaviour
     public Button continueButton;
 
     public Button levelSelectorButton;
+    public Button levelSelectorBack;
+    public Button levelSelectorReset;
     public GameObject levelSelectorUI;
     public Transform levelSelectorContent;
     public GameObject levelPrefab;
 
     private bool gameInProgress;
 
-    public void Start()
+    public void Awake()
     {
-        gameInProgress = PlayerPrefs.HasKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
+        gameInProgress = (PlayerPrefs.GetInt(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY, 0) > 0);
         continueButton.interactable = gameInProgress;
         levelSelectorButton.interactable = PlayerPrefs.HasKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
 
+        Button prevButton = null;
         for (int i = 0; i < numberOfLevels; i++)
         {
             GameObject go = Instantiate(levelPrefab, levelSelectorContent);
@@ -33,6 +36,25 @@ public class MainMenu : MonoBehaviour
 
             int checkPointId = i; // this is needed because else all the buttons will be set to the last checkpoint
             btn.onClick.AddListener(() => StartFromCheckpoint(checkPointId));
+
+            if (i == numberOfLevels - 1)
+            {
+                Navigation navig = new Navigation();
+                navig.mode = Navigation.Mode.Explicit;
+                navig.selectOnDown = levelSelectorBack;
+                navig.selectOnUp = prevButton;
+                btn.navigation = navig;
+
+                navig = levelSelectorBack.navigation;
+                navig.selectOnUp = btn;
+                levelSelectorBack.navigation = navig;
+
+                navig = levelSelectorReset.navigation;
+                navig.selectOnUp = btn;
+                levelSelectorReset.navigation = navig;
+            }
+
+            prevButton = btn;
         }
     }
 
@@ -62,8 +84,6 @@ public class MainMenu : MonoBehaviour
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        //PlayerPrefs.DeleteKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
-        //PlayerPrefs.DeleteKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
 #else
         Application.Quit();
 #endif
@@ -81,5 +101,13 @@ public class MainMenu : MonoBehaviour
         gameObject.SetActive(true);
         levelSelectorUI.SetActive(false);
         EventSystem.current.SetSelectedGameObject(levelSelectorButton.gameObject);
+    }
+
+    public void ResetProgress()
+    {
+        PlayerPrefs.DeleteKey(CheckPointManager.PREFS_LAST_CHECKPOINT_KEY);
+        PlayerPrefs.DeleteKey(CheckPointManager.PREFS_MAX_CHECKPOINT_KEY);
+        continueButton.interactable = false;
+        levelSelectorButton.interactable = false;
     }
 }
