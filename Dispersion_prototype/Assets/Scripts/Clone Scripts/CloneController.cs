@@ -13,7 +13,7 @@ public class CloneController : MonoBehaviour
 
     CloneHealth cloneHealth;
 
-    Vector3 movement;                   // The vector to store the direction of the player's movement.
+    public Vector3 movement;                   // The vector to store the direction of the player's movement.
     Rigidbody cloneRigidbody;          // Reference to the player's rigidbody.
     ConstantForce customgravity;        // Gravity bassed on a Vector UP
 

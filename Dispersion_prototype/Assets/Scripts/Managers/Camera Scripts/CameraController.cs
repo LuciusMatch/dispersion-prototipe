@@ -13,9 +13,8 @@ public class CameraController : MonoBehaviour
     bool cameraOrtographic;
 
     bool cameraIsLocked;
+    Transform playerCam;
 
-    
-    
     [SerializeField]
     private bool movecam;
 
@@ -23,7 +22,11 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         movecam = false;
+    }
 
+    private void Start()
+    {
+        playerCam = GameManager.Instance.player.transform.Find("PlayerCameraPoint").transform;
     }
 
     private void Update()
@@ -102,8 +105,6 @@ public class CameraController : MonoBehaviour
 
     private void FollowPlayerOrtographic() //TEMPORARY SOLUTION
     {
-        Transform playerCam = GameManager.Instance.player.transform.Find("PlayerCameraPoint").transform;
-
         transform.position = Vector3.Lerp(transform.position, playerCam.position, 0.05f);
         transform.rotation = Quaternion.Lerp(transform.rotation, playerCam.rotation, 0.05f);
         cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 6.5f, 0.05f);
