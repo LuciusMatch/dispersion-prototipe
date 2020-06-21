@@ -21,10 +21,10 @@ public class WallTransparency  : MonoBehaviour
 
     private void Update()
     {
-        if (transparentOn)
-            renderer.material = fadeMaterial;
-        else
-            renderer.material = baseMaterial;
+        //if (transparentOn)
+        //    renderer.material = fadeMaterial;
+        //else
+        //    renderer.material = baseMaterial;
     }
 
 }
