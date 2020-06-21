@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private GameObject turningObject;
 
     private PlayerControls input;
-    private Vector2 moveInput;
+    public Vector2 moveInput;
 
     // Start is called before the first frame update
     void Awake()

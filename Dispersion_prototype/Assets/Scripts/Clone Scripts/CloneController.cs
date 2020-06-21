@@ -47,12 +47,10 @@ public class CloneController : MonoBehaviour
     public Animator animator;
 
     private PlayerControls input;
-    private Vector2 moveInput;
 
     private void Awake()
     {
         input = new PlayerControls();
-        input.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
     }
 
     void Start()
@@ -71,8 +69,6 @@ public class CloneController : MonoBehaviour
 
         animator = transform.GetChild(0).Find("Model").GetComponent<Animator>();
         cloneIndicator = GameObject.Find("CloneIndicator").GetComponent<Image>();
-        
-
     }
 
     // Update is called once per frame
@@ -92,8 +88,8 @@ public class CloneController : MonoBehaviour
         }
 
 
-        float h = moveInput.x;
-        float v = moveInput.y;
+        float h = playerController.moveInput.x;
+        float v = playerController.moveInput.y;
 
         if (playerController.hasGun) animator.SetBool("HasGun", true);
         else animator.SetBool("HasGun", false);
