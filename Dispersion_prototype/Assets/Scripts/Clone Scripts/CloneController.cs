@@ -47,6 +47,8 @@ public class CloneController : MonoBehaviour
     public Animator animator;
 
     private PlayerControls input;
+    
+    public bool alive = true;
 
     private void Awake()
     {
@@ -142,7 +144,7 @@ public class CloneController : MonoBehaviour
         //    cloneRigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         //}
 
-        holdposition = input.Gameplay.FreezeClone.triggered;
+        holdposition = input.Gameplay.FreezeClone.triggered || !alive;
         
         /*if(Input.GetKey(KeyCode.Mouse1))
         {

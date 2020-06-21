@@ -136,7 +136,7 @@ public class DisplaySpeech : MonoBehaviour
         {
             yield return new WaitForSeconds(2 + lines[lineIndex].Length * 0.03f);
 
-            if (lineIndex + 1 == i && i != lines.Count)
+            if (lineIndex + 1 == i && displaying)
             {
                 DisplayNext();
             }

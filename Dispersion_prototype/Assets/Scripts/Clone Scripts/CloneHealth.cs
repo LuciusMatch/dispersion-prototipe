@@ -5,7 +5,7 @@ using UnityEngine;
 public class CloneHealth : MonoBehaviour
 {
     float maxHealth = 100;
-    
+
     GameObject healthbar;
     [SerializeField]
     Vector3 helthbarlenght;
@@ -30,7 +30,7 @@ public class CloneHealth : MonoBehaviour
 
     }
 
-   void UpdateHP()
+    void UpdateHP()
     {
         Vector3 healthbarlengthnew = new Vector3(helthbarlenght.x, helthbarlenght.y, helthbarlenght.z * curHealth / maxHealth);
         healthbar.transform.localScale = healthbarlengthnew;
@@ -45,10 +45,11 @@ public class CloneHealth : MonoBehaviour
         UpdateHP();
     }
 
-     public void CloneDeath()
+    public void CloneDeath()
     {
         cloningController.platformactivated = false;
         GameManager.Instance.clones.Remove(this.gameObject);
+        GameManager.audioPlayer.ElectricShock();
 
         KeycardInventory inventory = GetComponent<KeycardInventory>();
         if (inventory != null)
@@ -63,7 +64,14 @@ public class CloneHealth : MonoBehaviour
             }
         }
 
-        Destroy(this.gameObject);
+        animator.SetBool("Death", true);
+        GetComponent<CloneController>().alive = false;
+        StartCoroutine(DeathCoroutine());
     }
 
+    IEnumerator DeathCoroutine()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
 }

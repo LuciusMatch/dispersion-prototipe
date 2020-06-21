@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class TimedDoorWarning : MonoBehaviour
 {
     public AudioClip warningAudio;
     public GameObject warningUI;
+    public AudioMixerGroup group;
 
     private AudioSource source = null;
     private Image[] images;
@@ -18,8 +20,9 @@ public class TimedDoorWarning : MonoBehaviour
     {
         source = gameObject.AddComponent<AudioSource>();
         source.clip = warningAudio;
-        source.volume = 0.5f;
+        source.volume = 0.3f;
         source.loop = true;
+        source.outputAudioMixerGroup = group;
 
         images = warningUI.GetComponentsInChildren<Image>();
         foreach (Image img in images)

@@ -6,6 +6,7 @@ public class CloneTurning : MonoBehaviour
 {
     [SerializeField]
     GameObject player;
+    CloneController cloneController;
 
     //public float turningspeed = 5;
 
@@ -15,7 +16,7 @@ public class CloneTurning : MonoBehaviour
     {
         player = GameObject.Find("Player").transform.Find("PlayerTurning").gameObject;
         //player = GameManager.Instance.player.transform.Find("PlayerTurning").gameObject; ;
-        //cloneController = transform.parent.GetComponent<CloneController>();
+        cloneController = transform.parent.GetComponent<CloneController>();
     }
 
     // Update is called once per frame
@@ -32,13 +33,16 @@ public class CloneTurning : MonoBehaviour
 
         Quaternion newRotation = player.transform.localRotation;
 
-        if (transform.parent.GetComponent<CloneController>().reversemovement == true)
+        if (cloneController.reversemovement == true)
         {
             newRotation.w *= -1;
             newRotation.x *= -1;
         }
 
-        transform.localRotation = newRotation;
+        if (cloneController.alive)
+        {
+            transform.localRotation = newRotation;
+        }
     }
 
     //void Turning()

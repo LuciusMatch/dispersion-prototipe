@@ -14,6 +14,7 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] private AudioClip zap;
 
     private AudioSource source;
+    private float doorStartTime = 0;
 
     private void Awake()
     {
@@ -27,31 +28,35 @@ public class AudioPlayer : MonoBehaviour
 
     public void DoorSlide()
     {
-        source.PlayOneShot(doorSlide);
+        if ((Time.time - doorStartTime) >= doorSlide.length)
+        {
+            source.PlayOneShot(doorSlide);
+            doorStartTime = Time.time;
+        }
     }
 
     public void KeycardPickedUp()
     {
-        source.PlayOneShot(keycardPickedUp);
+        source.PlayOneShot(keycardPickedUp, .7f);
     }
 
     public void AccessDenied()
     {
-        source.PlayOneShot(accessDenied);
+        source.PlayOneShot(accessDenied, .8f);
     }
 
     public void Cloning()
     {
-        source.PlayOneShot(cloning);
+        source.PlayOneShot(cloning, .8f);
     }
 
     public void MovingWalls()
     {
-        source.PlayOneShot(movingWalls);
+        source.PlayOneShot(movingWalls, .5f);
     }
 
     public void ElectricShock()
     {
-        source.PlayOneShot(zap);
+        source.PlayOneShot(zap, .7f);
     }
 }
