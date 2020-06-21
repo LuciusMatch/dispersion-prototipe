@@ -7,14 +7,15 @@ public class CloneTurning : MonoBehaviour
     [SerializeField]
     GameObject player;
 
-    public float turningspeed = 5;
+    //public float turningspeed = 5;
 
-    CloneController cloneController;
-    // Start is called before the first frame update
+    //CloneController cloneController;
+    //// Start is called before the first frame update
     void Start()
     {
-        player = GameManager.Instance.player;
-        cloneController = transform.parent.GetComponent<CloneController>();
+        player = GameObject.Find("Player").transform.Find("PlayerTurning").gameObject;
+        //player = GameManager.Instance.player.transform.Find("PlayerTurning").gameObject; ;
+        //cloneController = transform.parent.GetComponent<CloneController>();
     }
 
     // Update is called once per frame
@@ -40,14 +41,14 @@ public class CloneTurning : MonoBehaviour
         transform.localRotation = newRotation;
     }
 
-    void Turning()
-    {
-        if (cloneController.movement != Vector3.zero)
-        {
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                Quaternion.LookRotation(cloneController.movement), Time.deltaTime * turningspeed); // IT IS NOT LOCAL!!!
-        }
-    }
+    //void Turning()
+    //{
+    //    if (cloneController.movement != Vector3.zero)
+    //    {
+    //        transform.rotation = Quaternion.Slerp(
+    //            transform.rotation,
+    //            Quaternion.LookRotation(cloneController.movement), Time.deltaTime * turningspeed); // IT IS NOT LOCAL!!!
+    //    }
+    //}
 
 }
