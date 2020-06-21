@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
 
         if (movecam && !cameraOrtographic && !cameraIsLocked)
         {
-            //FollowPlayerPerspective();
+            FollowPlayerPerspective();
         }
     }
 
@@ -119,12 +119,13 @@ public class CameraController : MonoBehaviour
 
     private void FollowPlayerPerspective() //TEMPORARY SOLUTION
     {
-        //Transform playerCam = GameManager.Instance.player.transform.Find("PlayerCemeraPerspectivePoint").transform;
+        Transform playerCam = GameManager.Instance.player.transform.Find("PlayerCemeraPerspectivePoint").transform;
 
-        //transform.position = Vector3.Lerp(transform.position, playerCam.position, 0.05f);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, playerCam.rotation, 0.05f);
-        //cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 6.5f, 0.05f);
+        transform.position = Vector3.Lerp(transform.position, playerCam.position, 0.05f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, playerCam.rotation, 0.05f);
+        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, 6.5f, 0.05f);
 
+        GameManager.Instance.player.GetComponent<PlayerController>().GetMovmentDir(playerCam);
         //if (transform.rotation == playerCam.rotation)
         //{
         //    Debug.Log("FFFFFFFFFF");
