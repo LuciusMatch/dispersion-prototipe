@@ -71,18 +71,21 @@ public class DisplaySpeech : MonoBehaviour
 
     public void Display(Speech speech)
     {
-        if (displaying)
+        if (OptionsManager.thoughtBubblesEnabled)
         {
-            lines.AddRange(speech.lines);
-        }
-        else
-        {
-            i = 0;
-            lines = new List<string>(speech.lines);
-            DisplayNext();
-            fadingIn = true;
-            text.SetAlpha(1);
-            t = 0;
+            if (displaying)
+            {
+                lines.AddRange(speech.lines);
+            }
+            else
+            {
+                i = 0;
+                lines = new List<string>(speech.lines);
+                DisplayNext();
+                fadingIn = true;
+                text.SetAlpha(1);
+                t = 0;
+            }
         }
     }
 
@@ -128,6 +131,16 @@ public class DisplaySpeech : MonoBehaviour
 
         typing = false;
         skip = false;
+
+        if (OptionsManager.thoughtAutoForward)
+        {
+            yield return new WaitForSeconds(2 + lines[lineIndex].Length * 0.03f);
+
+            if (lineIndex + 1 == i && i != lines.Count)
+            {
+                DisplayNext();
+            }
+        }
     }
 
     private void OnEnable()

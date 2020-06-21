@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 public class UpdateOptions : MonoBehaviour
 {
-    OptionsManager optionsManager;
     public Toggle cameraRelativeMovement;
+    public Toggle thoughtBubbles;
+    public Toggle thoughtAutoForward;
 
-    void Start()
+    void OnEnable()
     {
-        cameraRelativeMovement = transform.Find("LevelRelativeToggle").GetComponent<Toggle>();
         cameraRelativeMovement.isOn = OptionsManager.movementRelativeToCamOption;
-    }
-
-    void SetOptionsUI()
-    {
-        cameraRelativeMovement.isOn = !OptionsManager.movementRelativeToCamOption;
+        thoughtBubbles.isOn = OptionsManager.thoughtBubblesEnabled;
+        thoughtAutoForward.isOn = OptionsManager.thoughtAutoForward;
     }
 }
