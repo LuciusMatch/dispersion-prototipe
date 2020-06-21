@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum IconTypes { None, Joystick, Read, Walk, Keycard };
+public enum IconTypes { None, Joystick, Read, Walk, Keycard, ClosedDoor };
 
 public class DisplayIndicator : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class DisplayIndicator : MonoBehaviour
     [SerializeField] private Sprite read;
     [SerializeField] private Sprite walk;
     [SerializeField] private Sprite keycard;
+    [SerializeField] private Sprite closedDoor;
     
     public void TurnOn(IconTypes type)
     {
@@ -29,6 +30,9 @@ public class DisplayIndicator : MonoBehaviour
                 break;
             case IconTypes.Keycard:
                 indicator.sprite = keycard;
+                break;
+            case IconTypes.ClosedDoor:
+                indicator.sprite = closedDoor;
                 break;
         }
 

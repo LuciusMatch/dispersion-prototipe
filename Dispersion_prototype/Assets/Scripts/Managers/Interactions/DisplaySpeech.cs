@@ -1,18 +1,20 @@
 ﻿using MyBox;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplaySpeech : MonoBehaviour
 {
     [SerializeField] private Text text;
+    [SerializeField] private GameObject arrow;
     [SerializeField] int speed = 25;
 
     private int i = 0;
-    private Speech speech;
+    private List<string> lines;
     private Image image;
-    private bool displaying = false;
+    public static bool displaying = false;
     private bool typing = false;
     private bool skip = false;
     private bool fadingIn = false;
@@ -41,8 +43,19 @@ public class DisplaySpeech : MonoBehaviour
             text.SetAlpha(Mathf.Lerp(1, 0, t));
         }
 
-        t += 4 * Time.deltaTime;
+        if (image.color.a >= 0.79f)
+        {
+            displaying = true;
+        } else
+        {
+            displaying = false;
+        }
 
+        t += 4 * Time.deltaTime;
+    }
+
+    private void LateUpdate()
+    {
         if (input.UI.Submit.triggered && displaying)
         {
             if (!typing)
@@ -58,21 +71,27 @@ public class DisplaySpeech : MonoBehaviour
 
     public void Display(Speech speech)
     {
-        i = 0;
-        this.speech = speech;
-        DisplayNext();
-        displaying = true;
-        fadingIn = true;
-        text.SetAlpha(1);
-        t = 0;
+        if (displaying)
+        {
+            lines.AddRange(speech.lines);
+        }
+        else
+        {
+            i = 0;
+            lines = new List<string>(speech.lines);
+            DisplayNext();
+            fadingIn = true;
+            text.SetAlpha(1);
+            t = 0;
+        }
     }
 
     public void DisplayNext()
     {
         text.text = "";
-        if (i < speech.lines.Length)
+        if (i < lines.Count)
         {
-            StartCoroutine(TypeLine(speech.lines[i]));
+            StartCoroutine(TypeLine(i));
             i++;
         }
         else
@@ -83,17 +102,17 @@ public class DisplaySpeech : MonoBehaviour
 
     public void Close()
     {
-        displaying = false;
         fadingIn = false;
         t = 0;
     }
 
-    private IEnumerator TypeLine(string line)
+    private IEnumerator TypeLine(int lineIndex)
     {
-        if (i == 0) yield return new WaitForSeconds(0.25f); // waiting for the box to fade in
+        arrow.SetActive(false);
+        if (lineIndex == 0) yield return new WaitForSeconds(0.25f); // waiting for the box to fade in
 
         typing = true;
-        foreach (char letter in line)
+        foreach (char letter in lines[lineIndex])
         {
             text.text += letter;
             if (!skip)
@@ -101,6 +120,12 @@ public class DisplaySpeech : MonoBehaviour
                 yield return new WaitForSeconds(1f / speed);
             }
         }
+
+        if (lineIndex < lines.Count - 1)
+        {
+            arrow.SetActive(true);
+        }
+
         typing = false;
         skip = false;
     }

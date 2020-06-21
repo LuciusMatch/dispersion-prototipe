@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem.Users;
 
 public enum EventType { Use, UseOnce, Trigger, TriggerOnce, PressurePlateOnOff, PressurePlateRepeated, StoryNote }
 public class Interaction : MonoBehaviour
@@ -33,61 +32,67 @@ public class Interaction : MonoBehaviour
         others.RemoveAll(item => item == null);
         foreach (Collider other in others)
         {
-            if (other.tag == "Player" || other.tag == "Clone")
+            if (input.Gameplay.Use.triggered && !DisplaySpeech.displaying)
             {
-                if (input.Gameplay.Use.triggered)
+                if (eventType == EventType.Use || eventType == EventType.StoryNote
+                    || (eventType == EventType.UseOnce && !alreadyUsed))
                 {
-                    if (eventType == EventType.Use || eventType == EventType.StoryNote
-                        || (eventType == EventType.UseOnce && !alreadyUsed))
+                    if (!keycardRequired || other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
                     {
-                        if (!keycardRequired || other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
-                        {
-                            action.Invoke();
-                            alreadyUsed = true;
-                        }
-                        else
-                        {
-                            Debug.Log("Keycard not collected yet");
-                            GameManager.audioPlayer.AccessDenied();
-                        }
+                        action.Invoke();
+                        alreadyUsed = true;
+                    }
+                    else
+                    {
+                        Debug.Log("Keycard not collected yet");
+                        GameManager.audioPlayer.AccessDenied();
                     }
                 }
-                else if (input.UI.Cancel.triggered && eventType == EventType.StoryNote && alreadyUsed)
-                {
-                    actionOff.Invoke();
-                    alreadyUsed = false;
-                }
-                else if (eventType == EventType.PressurePlateRepeated)
-                {
-                    action.Invoke();
-                }
+            }
+            else if (input.UI.Cancel.triggered && eventType == EventType.StoryNote && alreadyUsed)
+            {
+                actionOff.Invoke();
+                alreadyUsed = false;
+            }
+            else if (eventType == EventType.PressurePlateRepeated)
+            {
+                action.Invoke();
             }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        others.Add(other);
-        GameManager.indicator.TurnOn(icon);
-
-        if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.Trigger
-            || (eventType == EventType.TriggerOnce && !alreadyUsed))
-            && (other.tag == "Player" || other.tag == "Clone"))
+        if (other.tag == "Player" || other.tag == "Clone")
         {
-            alreadyUsed = true;
-            action.Invoke();
+            others.Add(other);
+            if (keycardRequired && other.gameObject.GetComponent<KeycardInventory>().HasKeycard(keycardID))
+            {
+                icon = IconTypes.Joystick;
+            }
+            StartCoroutine(IndicatorOn());
+
+            if ((eventType == EventType.PressurePlateOnOff || eventType == EventType.Trigger
+                || (eventType == EventType.TriggerOnce && !alreadyUsed))
+                && (other.tag == "Player" || other.tag == "Clone"))
+            {
+                alreadyUsed = true;
+                action.Invoke();
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        others.Remove(other);
-        GameManager.indicator.TurnOff();
-
-        if ((other.tag == "Player" || other.tag == "Clone")
-            && eventType == EventType.PressurePlateOnOff || (eventType == EventType.StoryNote && alreadyUsed))
+        if (other.tag == "Player" || other.tag == "Clone")
         {
-            actionOff.Invoke();
+            others.Remove(other);
+            GameManager.indicator.TurnOff();
+
+            if (eventType == EventType.PressurePlateOnOff || (eventType == EventType.StoryNote && alreadyUsed))
+            {
+                actionOff.Invoke();
+            }
         }
     }
 
@@ -99,5 +104,14 @@ public class Interaction : MonoBehaviour
     private void OnDisable()
     {
         input.Disable();
+    }
+
+    IEnumerator IndicatorOn()
+    {
+        while (DisplaySpeech.displaying)
+        {
+            yield return null;
+        }
+        GameManager.indicator.TurnOn(icon);
     }
 }
